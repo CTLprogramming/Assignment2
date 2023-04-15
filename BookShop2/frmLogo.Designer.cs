@@ -38,8 +38,8 @@
             // picLogo
             // 
             this.picLogo.Image = ((System.Drawing.Image)(resources.GetObject("picLogo.Image")));
-            this.picLogo.Location = new System.Drawing.Point(720, 120);
-            this.picLogo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picLogo.Location = new System.Drawing.Point(721, 123);
+            this.picLogo.Margin = new System.Windows.Forms.Padding(4);
             this.picLogo.Name = "picLogo";
             this.picLogo.Size = new System.Drawing.Size(1040, 625);
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -57,7 +57,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2538, 1104);
             this.Controls.Add(this.picLogo);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmLogo";
             this.Text = "frmLogo";
             this.Load += new System.EventHandler(this.frmLogo_Load);
