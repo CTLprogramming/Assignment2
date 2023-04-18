@@ -52,6 +52,7 @@ namespace BookShop2
             frmShop.FormBorderStyle = FormBorderStyle.None;
             frmShop.WindowState = FormWindowState.Maximized;
             pnlMain.Controls.Add(frmShop);
+
             frmShop.Show();
         }
 

@@ -8,16 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BookShop2
 {
     public partial class frmShop : Form
     {
 
-        SqlDataAdapter  daBook; //SqlDataAdapter serves as a bridge between a DataSet and SQL Server for retrieving and saving data
+        SqlDataAdapter daBook; //SqlDataAdapter serves as a bridge between a DataSet and SQL Server for retrieving and saving data
         DataSet dsBookShop = new DataSet(); //declare local copy of database
         SqlCommand cmdBook; //A SqlCommand object allows you to query and send commands to a database. 
-        DataRow  drBook; // You add data to the data table using DataRow object
+        DataRow drBook; // You add data to the data table using DataRow object
         SqlConnection conn; // Equivalent to network connection to server
         String connStr, sqlBook;
         long iSBN = 0;
@@ -106,7 +107,7 @@ namespace BookShop2
             stock = Convert.ToInt32(drBook["Stock"].ToString());
 
             //CHECK STOCK   
-            int cartStock = 0;      //FIND WHAT'S ALREADY IN THE CART (= carStock)
+            int cartStock = 0;      //FIND WHAT'S ALREADY IN THE CART (= cartStock)
             for (int i = 0; i < MyGlobals.orderDetails.Count; i++)
             {
                 if (MyGlobals.orderDetails[i].ISBN == iSBN)
@@ -120,13 +121,13 @@ namespace BookShop2
                 cmbBookQuantity.Items.Clear();
                 for (int i = 0; i < Convert.ToInt16(drBook["Stock"].ToString()) - cartStock; i++)
                 {
-                    this.cmbBookQuantity.Items.Add(i+1);
+                    this.cmbBookQuantity.Items.Add(i + 1);
                     if (i == 8) break;
                 }
-                if(Convert.ToInt16(drBook["Stock"].ToString()) < 6)                
+                if (Convert.ToInt16(drBook["Stock"].ToString()) < 6)
                     lblLowStock.Visible = true;
-                
-                    
+
+
             }
             else
             {
@@ -166,7 +167,7 @@ namespace BookShop2
             MyOrderDetail myOrderDetail = new MyOrderDetail();
             myOrderDetail.ISBN = iSBN;
             myOrderDetail.Title = txtBookTitle.Text;
-            myOrderDetail.Author= txtBookAuthor.Text;
+            myOrderDetail.Author = txtBookAuthor.Text;
             myOrderDetail.Quantity = Convert.ToInt32(cmbBookQuantity.Text);
             myOrderDetail.Price = Convert.ToDecimal(txtBookPrice.Text);
             myOrderDetail.Stock = stock;
@@ -175,11 +176,11 @@ namespace BookShop2
             bool duplicate = false;
             for (int i = 0; i < MyGlobals.orderDetails.Count; i++)
             {
-                if (MyGlobals.orderDetails[i].ISBN == iSBN) 
-                { 
+                if (MyGlobals.orderDetails[i].ISBN == iSBN)
+                {
                     duplicate = true;
                     MyGlobals.orderDetails[i].Quantity = MyGlobals.orderDetails[i].Quantity + myOrderDetail.Quantity;
-                    break; 
+                    break;
                 }
             }
             if (duplicate == false)
@@ -192,6 +193,7 @@ namespace BookShop2
 
             //UPDATE CART IN TOP RIGHT CORNER
             //            ((frmMain)this.Owner).lblCartQuant.Text = MyGlobals.cart.ToString();
+            //frmMain.updateCart(MyGlobals.cart.ToString());
 
             clearForm();
 

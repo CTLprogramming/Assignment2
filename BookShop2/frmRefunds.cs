@@ -56,7 +56,7 @@ namespace BookShop2
             //enable relevant alpha buttons
             foreach (DataRow dr in dsBookShop.Tables["Names"].Rows)
             {
-                no = (int)dr["Surname"].ToString()[0] - 65;
+                no = dr["Surname"].ToString()[0] - 65;
                 btns[no].Enabled = true;
                 btns[no].BackColor = Color.FromArgb(45, 80, 150);
                 btns[no].FlatAppearance.BorderColor = Color.FromArgb(45, 80, 150);

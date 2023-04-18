@@ -100,19 +100,10 @@
     <Compile Include="MyGlobals.cs" />
     <Compile Include="MyOrderDetail.cs" />
     <Compile Include="MyValidation.cs" />
-    <Compile Include="frmNwrc.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmNwrc.Designer.cs">
-      <DependentUpon>frmNwrc.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmCustomer.resx">
       <DependentUpon>frmCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmNwrc.resx">
-      <DependentUpon>frmNwrc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReceipts.resx">
       <DependentUpon>frmReceipts.cs</DependentUpon>

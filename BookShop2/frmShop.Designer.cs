@@ -71,17 +71,18 @@
             this.panel1.Controls.Add(this.label12);
             this.panel1.Controls.Add(this.txtBookTitle);
             this.panel1.Controls.Add(this.label11);
-            this.panel1.Location = new System.Drawing.Point(1256, 163);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6);
+            this.panel1.Location = new System.Drawing.Point(942, 130);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1162, 855);
+            this.panel1.Size = new System.Drawing.Size(872, 684);
             this.panel1.TabIndex = 0;
             // 
             // lblLowStock
             // 
             this.lblLowStock.AutoSize = true;
             this.lblLowStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLowStock.Location = new System.Drawing.Point(680, 512);
+            this.lblLowStock.Location = new System.Drawing.Point(510, 410);
+            this.lblLowStock.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLowStock.Name = "lblLowStock";
             this.lblLowStock.Size = new System.Drawing.Size(129, 29);
             this.lblLowStock.TabIndex = 89;
@@ -92,7 +93,8 @@
             // 
             this.lblBookOrderMessage.AutoSize = true;
             this.lblBookOrderMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBookOrderMessage.Location = new System.Drawing.Point(381, 774);
+            this.lblBookOrderMessage.Location = new System.Drawing.Point(286, 619);
+            this.lblBookOrderMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBookOrderMessage.Name = "lblBookOrderMessage";
             this.lblBookOrderMessage.Size = new System.Drawing.Size(327, 29);
             this.lblBookOrderMessage.TabIndex = 88;
@@ -108,10 +110,10 @@
             this.btnChangeCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnChangeCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChangeCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnChangeCust.Location = new System.Drawing.Point(920, 38);
-            this.btnChangeCust.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnChangeCust.Location = new System.Drawing.Point(690, 30);
+            this.btnChangeCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnChangeCust.Name = "btnChangeCust";
-            this.btnChangeCust.Size = new System.Drawing.Size(206, 41);
+            this.btnChangeCust.Size = new System.Drawing.Size(154, 39);
             this.btnChangeCust.TabIndex = 85;
             this.btnChangeCust.Text = "Change";
             this.btnChangeCust.UseVisualStyleBackColor = false;
@@ -122,8 +124,7 @@
             this.lblCustomer.AutoSize = true;
             this.lblCustomer.BackColor = System.Drawing.SystemColors.Control;
             this.lblCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCustomer.Location = new System.Drawing.Point(329, 58);
-            this.lblCustomer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCustomer.Location = new System.Drawing.Point(247, 46);
             this.lblCustomer.Name = "lblCustomer";
             this.lblCustomer.Size = new System.Drawing.Size(0, 29);
             this.lblCustomer.TabIndex = 87;
@@ -133,8 +134,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.Control;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(38, 58);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(28, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(132, 29);
             this.label2.TabIndex = 86;
@@ -150,10 +150,10 @@
             this.btnAddBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnAddBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddBook.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnAddBook.Location = new System.Drawing.Point(680, 639);
-            this.btnAddBook.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnAddBook.Location = new System.Drawing.Point(510, 511);
+            this.btnAddBook.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnAddBook.Name = "btnAddBook";
-            this.btnAddBook.Size = new System.Drawing.Size(206, 41);
+            this.btnAddBook.Size = new System.Drawing.Size(154, 39);
             this.btnAddBook.TabIndex = 85;
             this.btnAddBook.Text = "Add to cart";
             this.btnAddBook.UseVisualStyleBackColor = false;
@@ -169,10 +169,10 @@
             this.btnCheckout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnCheckout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCheckout.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnCheckout.Location = new System.Drawing.Point(920, 762);
-            this.btnCheckout.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCheckout.Location = new System.Drawing.Point(690, 610);
+            this.btnCheckout.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnCheckout.Name = "btnCheckout";
-            this.btnCheckout.Size = new System.Drawing.Size(206, 41);
+            this.btnCheckout.Size = new System.Drawing.Size(154, 39);
             this.btnCheckout.TabIndex = 83;
             this.btnCheckout.Text = "Checkout";
             this.btnCheckout.UseVisualStyleBackColor = false;
@@ -188,10 +188,10 @@
             this.btnCancelBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnCancelBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelBook.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnCancelBook.Location = new System.Drawing.Point(920, 639);
-            this.btnCancelBook.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCancelBook.Location = new System.Drawing.Point(690, 511);
+            this.btnCancelBook.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnCancelBook.Name = "btnCancelBook";
-            this.btnCancelBook.Size = new System.Drawing.Size(206, 41);
+            this.btnCancelBook.Size = new System.Drawing.Size(154, 39);
             this.btnCancelBook.TabIndex = 84;
             this.btnCancelBook.Text = "Cancel";
             this.btnCancelBook.UseVisualStyleBackColor = false;
@@ -203,10 +203,10 @@
             this.cmbBookQuantity.Enabled = false;
             this.cmbBookQuantity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbBookQuantity.FormattingEnabled = true;
-            this.cmbBookQuantity.Location = new System.Drawing.Point(334, 505);
-            this.cmbBookQuantity.Margin = new System.Windows.Forms.Padding(6);
+            this.cmbBookQuantity.Location = new System.Drawing.Point(250, 404);
+            this.cmbBookQuantity.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbBookQuantity.Name = "cmbBookQuantity";
-            this.cmbBookQuantity.Size = new System.Drawing.Size(272, 37);
+            this.cmbBookQuantity.Size = new System.Drawing.Size(205, 37);
             this.cmbBookQuantity.TabIndex = 82;
             // 
             // label1
@@ -214,8 +214,7 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.Control;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(38, 509);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(28, 407);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(115, 29);
             this.label1.TabIndex = 81;
@@ -226,8 +225,7 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.SystemColors.Control;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(38, 289);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(28, 231);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(73, 29);
             this.label8.TabIndex = 80;
@@ -238,10 +236,9 @@
             this.txtBookPrice.BackColor = System.Drawing.Color.White;
             this.txtBookPrice.Enabled = false;
             this.txtBookPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBookPrice.Location = new System.Drawing.Point(334, 416);
-            this.txtBookPrice.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBookPrice.Location = new System.Drawing.Point(250, 333);
             this.txtBookPrice.Name = "txtBookPrice";
-            this.txtBookPrice.Size = new System.Drawing.Size(792, 35);
+            this.txtBookPrice.Size = new System.Drawing.Size(595, 35);
             this.txtBookPrice.TabIndex = 78;
             // 
             // txtBookAuthor
@@ -249,10 +246,9 @@
             this.txtBookAuthor.BackColor = System.Drawing.Color.White;
             this.txtBookAuthor.Enabled = false;
             this.txtBookAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBookAuthor.Location = new System.Drawing.Point(334, 356);
-            this.txtBookAuthor.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBookAuthor.Location = new System.Drawing.Point(250, 285);
             this.txtBookAuthor.Name = "txtBookAuthor";
-            this.txtBookAuthor.Size = new System.Drawing.Size(792, 35);
+            this.txtBookAuthor.Size = new System.Drawing.Size(595, 35);
             this.txtBookAuthor.TabIndex = 77;
             // 
             // label12
@@ -260,8 +256,7 @@
             this.label12.AutoSize = true;
             this.label12.BackColor = System.Drawing.SystemColors.Control;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(38, 356);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(28, 285);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(95, 29);
             this.label12.TabIndex = 75;
@@ -272,10 +267,9 @@
             this.txtBookTitle.BackColor = System.Drawing.Color.White;
             this.txtBookTitle.Enabled = false;
             this.txtBookTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBookTitle.Location = new System.Drawing.Point(334, 293);
-            this.txtBookTitle.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBookTitle.Location = new System.Drawing.Point(250, 234);
             this.txtBookTitle.Name = "txtBookTitle";
-            this.txtBookTitle.Size = new System.Drawing.Size(792, 35);
+            this.txtBookTitle.Size = new System.Drawing.Size(595, 35);
             this.txtBookTitle.TabIndex = 76;
             // 
             // label11
@@ -283,8 +277,7 @@
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.SystemColors.Control;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(38, 418);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(28, 334);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(81, 29);
             this.label11.TabIndex = 74;
@@ -295,10 +288,9 @@
             this.textBox1.BackColor = System.Drawing.Color.White;
             this.textBox1.Enabled = false;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(120, 71);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(90, 57);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(2026, 35);
+            this.textBox1.Size = new System.Drawing.Size(1520, 35);
             this.textBox1.TabIndex = 83;
             // 
             // lblShopSearch
@@ -310,10 +302,10 @@
             this.lblShopSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.lblShopSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblShopSearch.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblShopSearch.Location = new System.Drawing.Point(2176, 65);
-            this.lblShopSearch.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.lblShopSearch.Location = new System.Drawing.Point(1632, 52);
+            this.lblShopSearch.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.lblShopSearch.Name = "lblShopSearch";
-            this.lblShopSearch.Size = new System.Drawing.Size(206, 41);
+            this.lblShopSearch.Size = new System.Drawing.Size(154, 39);
             this.lblShopSearch.TabIndex = 84;
             this.lblShopSearch.Text = "Search";
             this.lblShopSearch.UseVisualStyleBackColor = false;
@@ -323,9 +315,10 @@
             this.lstBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstBook.FormattingEnabled = true;
             this.lstBook.ItemHeight = 29;
-            this.lstBook.Location = new System.Drawing.Point(119, 163);
+            this.lstBook.Location = new System.Drawing.Point(89, 130);
+            this.lstBook.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lstBook.Name = "lstBook";
-            this.lstBook.Size = new System.Drawing.Size(1097, 787);
+            this.lstBook.Size = new System.Drawing.Size(824, 613);
             this.lstBook.TabIndex = 85;
             this.lstBook.Click += new System.EventHandler(this.lstBook_Click);
             // 
@@ -338,10 +331,10 @@
             this.btnAuthorTitle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnAuthorTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAuthorTitle.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnAuthorTitle.Location = new System.Drawing.Point(1010, 977);
-            this.btnAuthorTitle.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnAuthorTitle.Location = new System.Drawing.Point(758, 782);
+            this.btnAuthorTitle.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnAuthorTitle.Name = "btnAuthorTitle";
-            this.btnAuthorTitle.Size = new System.Drawing.Size(206, 41);
+            this.btnAuthorTitle.Size = new System.Drawing.Size(154, 39);
             this.btnAuthorTitle.TabIndex = 86;
             this.btnAuthorTitle.Text = "Author";
             this.btnAuthorTitle.UseVisualStyleBackColor = false;
@@ -352,8 +345,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(374, 989);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(280, 791);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(452, 29);
             this.label3.TabIndex = 88;
@@ -361,16 +353,16 @@
             // 
             // frmShop
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2508, 1098);
+            this.ClientSize = new System.Drawing.Size(1881, 878);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnAuthorTitle);
             this.Controls.Add(this.lstBook);
             this.Controls.Add(this.lblShopSearch);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(6);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmShop";
             this.Text = "Shop";
             this.Load += new System.EventHandler(this.frmShop_Load);
