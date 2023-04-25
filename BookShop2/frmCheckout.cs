@@ -28,6 +28,8 @@ namespace BookShop2
             if (dialogResult == DialogResult.Yes)
             {
                 MyGlobals.orderDetails.Clear();
+                MyGlobals.cart = 0;
+                frmMain.instance.lblCartQuant.Text = MyGlobals.cart.ToString();
                 MyGlobals.frmShop = true;
                 Close();
             }
@@ -108,7 +110,7 @@ namespace BookShop2
                 flpCart.Controls.Add(label1);
                 flpCart.Controls.Add(combo);
 
-                label0.Text = MyGlobals.orderDetails[i].Title + "\n" + MyGlobals.orderDetails[i].Author;
+                label0.Text = MyGlobals.orderDetails[i].Title + "\n" + MyGlobals.orderDetails[i].AuthorForename +" "+ MyGlobals.orderDetails[i].AuthorSurname;
                 label1.Text = MyGlobals.orderDetails[i].Price.ToString();
 
                 combo.Items.Clear();
@@ -136,11 +138,14 @@ namespace BookShop2
 
         private decimal CalculateTotal()
         {
+            MyGlobals.cart = 0;
             decimal total = 0;
             for (int i = 0; i < MyGlobals.orderDetails.Count; i++)
             {
                 total = total + MyGlobals.orderDetails[i].Price * MyGlobals.orderDetails[i].Quantity;
+                MyGlobals.cart += MyGlobals.orderDetails[i].Quantity;
             }
+            frmMain.instance.lblCartQuant.Text = MyGlobals.cart.ToString();
             return total;
         }
 
@@ -241,6 +246,8 @@ namespace BookShop2
                 MyGlobals.justOrdered[1] = custOrderNo;
                 MyGlobals.orderDetails.Clear();
                 MyGlobals.customer = null;
+                MyGlobals.cart = 0;
+                frmMain.instance.lblCartQuant.Text = MyGlobals.cart.ToString();
                 MyGlobals.frmReceipt = true;
                 Close();
 

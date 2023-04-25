@@ -29,7 +29,6 @@ namespace BookShop2
             InitializeComponent();
         }
 
-
         private void frmShop_Load(object sender, EventArgs e)
         {
             MyGlobals.frmShop = false;
@@ -47,7 +46,7 @@ namespace BookShop2
             connStr = @"Data Source = .\sqlexpress; Initial Catalog = BookShop; Integrated Security = true";
 
             //set up dataAdapter for book details for the book listbox
-            sqlBook = @"Select ISBN, BookTitle, Author, Stock, Price, SupplNo, BookTitle + '  -  ' + Author as details from BOOK order by BookTitle";
+            sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, BookTitle + '  -  ' + AuthorForename + '  ' +  AuthorSurname as details from BOOK order by BookTitle";
             conn = new SqlConnection(connStr);
             cmdBook = new SqlCommand(sqlBook, conn);
             daBook = new SqlDataAdapter(cmdBook);
@@ -56,6 +55,8 @@ namespace BookShop2
 
 
             fillListboxBooks();
+
+
 
         }
 
@@ -78,12 +79,12 @@ namespace BookShop2
         {
             if (btnAuthorTitle.Text == "Author")
             {
-                sqlBook = @"Select ISBN, BookTitle, Author, Stock, Price, SupplNo, Author + '  -  ' +  BookTitle as details from BOOK order by Author";
+                sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, AuthorForename +' '+ AuthorSurname + '  -  ' +  BookTitle as details from BOOK order by AuthorSurname";
                 btnAuthorTitle.Text = "Title";
             }
             else
             {
-                sqlBook = @"Select ISBN, BookTitle, Author, Stock, Price, SupplNo, BookTitle + '  -  ' + Author as details from BOOK order by BookTitle";
+                sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, BookTitle + '  -  ' +  AuthorForename +', '+ AuthorSurname as details from BOOK order by BookTitle";
                 btnAuthorTitle.Text = "Author";
             }
             cmdBook = new SqlCommand(sqlBook, conn);
@@ -101,7 +102,7 @@ namespace BookShop2
             lblBookOrderMessage.Visible = false;
 
             txtBookTitle.Text = drBook["BookTitle"].ToString();
-            txtBookAuthor.Text = drBook["Author"].ToString();
+            txtBookAuthor.Text = drBook["AuthorForename"].ToString() +" "+ drBook["AuthorSurname"].ToString();
             txtBookPrice.Text = String.Format("{0:0.00}", drBook["Price"]);
             iSBN = Convert.ToInt64(drBook["ISBN"].ToString());
             stock = Convert.ToInt32(drBook["Stock"].ToString());
@@ -164,10 +165,14 @@ namespace BookShop2
 
         private void btnAddBook_Click(object sender, EventArgs e)
         {
+            drBook = dsBookShop.Tables["Book"].Rows.Find(iSBN);
+
             MyOrderDetail myOrderDetail = new MyOrderDetail();
             myOrderDetail.ISBN = iSBN;
             myOrderDetail.Title = txtBookTitle.Text;
-            myOrderDetail.Author = txtBookAuthor.Text;
+            myOrderDetail.AuthorForename = drBook["AuthorForename"].ToString();
+            myOrderDetail.AuthorSurname = drBook["AuthorSurname"].ToString();
+
             myOrderDetail.Quantity = Convert.ToInt32(cmbBookQuantity.Text);
             myOrderDetail.Price = Convert.ToDecimal(txtBookPrice.Text);
             myOrderDetail.Stock = stock;
@@ -192,8 +197,7 @@ namespace BookShop2
             lblBookOrderMessage.Visible = true;
 
             //UPDATE CART IN TOP RIGHT CORNER
-            //            ((frmMain)this.Owner).lblCartQuant.Text = MyGlobals.cart.ToString();
-            //frmMain.updateCart(MyGlobals.cart.ToString());
+            updateCart(MyGlobals.cart);
 
             clearForm();
 
@@ -202,6 +206,10 @@ namespace BookShop2
             btnCheckout.FlatAppearance.BorderColor = Color.FromArgb(45, 80, 150);
 
 
+        }
+        public void updateCart(int quantity)
+        {
+            frmMain.instance.lblCartQuant.Text = quantity.ToString();
         }
 
         private void clearForm()
@@ -221,6 +229,17 @@ namespace BookShop2
             btnCancelBook.FlatAppearance.BorderColor = Color.FromKnownColor(KnownColor.ControlLight);
         }
 
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {   
+            SqlDataAdapter daBooks = new SqlDataAdapter("Select *, BookTitle + '  -  ' + AuthorForename + '  ' +  AuthorSurname as details from BOOK WHERE BookTitle LIKE '%' +@parm1 +'%' OR AuthorForename LIKE '%' +@parm1 +'%' OR AuthorSurname LIKE '%' +@parm1 +'%'", connStr);
+            daBooks.SelectCommand.Parameters.AddWithValue("@parm1", txtSearch.Text);
+            DataTable dtBooks = new DataTable();
+            daBooks.Fill(dtBooks);
+            lstBook.DataSource = dtBooks;
+            lstBook.DisplayMember = "details";
+            lstBook.ValueMember = "ISBN";
+
+        }
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {

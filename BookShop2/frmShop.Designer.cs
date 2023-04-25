@@ -45,11 +45,11 @@
             this.label12 = new System.Windows.Forms.Label();
             this.txtBookTitle = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.lblShopSearch = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.lstBook = new System.Windows.Forms.ListBox();
             this.btnAuthorTitle = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -283,32 +283,17 @@
             this.label11.TabIndex = 74;
             this.label11.Text = "Price:";
             // 
-            // textBox1
+            // txtSearch
             // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.Enabled = false;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(90, 57);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(1520, 35);
-            this.textBox1.TabIndex = 83;
-            // 
-            // lblShopSearch
-            // 
-            this.lblShopSearch.AutoSize = true;
-            this.lblShopSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.lblShopSearch.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.lblShopSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.lblShopSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.lblShopSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblShopSearch.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblShopSearch.Location = new System.Drawing.Point(1632, 52);
-            this.lblShopSearch.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.lblShopSearch.Name = "lblShopSearch";
-            this.lblShopSearch.Size = new System.Drawing.Size(154, 39);
-            this.lblShopSearch.TabIndex = 84;
-            this.lblShopSearch.Text = "Search";
-            this.lblShopSearch.UseVisualStyleBackColor = false;
+            this.txtSearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtSearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtSearch.BackColor = System.Drawing.Color.White;
+            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(90, 57);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(598, 35);
+            this.txtSearch.TabIndex = 83;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // lstBook
             // 
@@ -316,7 +301,7 @@
             this.lstBook.FormattingEnabled = true;
             this.lstBook.ItemHeight = 29;
             this.lstBook.Location = new System.Drawing.Point(89, 130);
-            this.lstBook.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lstBook.Margin = new System.Windows.Forms.Padding(2);
             this.lstBook.Name = "lstBook";
             this.lstBook.Size = new System.Drawing.Size(824, 613);
             this.lstBook.TabIndex = 85;
@@ -347,20 +332,30 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(280, 791);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(452, 29);
+            this.label3.Size = new System.Drawing.Size(424, 29);
             this.label3.TabIndex = 88;
-            this.label3.Text = "Click to change alphabetical order by:";
+            this.label3.Text = "Click for whole  alphabetical list by:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(694, 60);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(219, 29);
+            this.label4.TabIndex = 89;
+            this.label4.Text = "Search Title/Author";
             // 
             // frmShop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1881, 878);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnAuthorTitle);
             this.Controls.Add(this.lstBook);
-            this.Controls.Add(this.lblShopSearch);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmShop";
@@ -384,11 +379,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cmbBookQuantity;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnAddBook;
         private System.Windows.Forms.Button btnCheckout;
         private System.Windows.Forms.Button btnCancelBook;
-        private System.Windows.Forms.Button lblShopSearch;
         private System.Windows.Forms.Label lblCustomer;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnChangeCust;
@@ -397,5 +391,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblBookOrderMessage;
         private System.Windows.Forms.Label lblLowStock;
+        private System.Windows.Forms.Label label4;
     }
 }

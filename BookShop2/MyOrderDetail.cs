@@ -11,20 +11,21 @@ namespace BookShop2
         public long iSBN;
         private int quantity, stock;
         private decimal price;
-        private string title, author;
+        private string title, authorForename, authorSurname;
         
         public MyOrderDetail() 
         {
-            this.iSBN = 0; this.quantity = 0; this.stock = 0; this.price = 0; this.title = string.Empty; this.author = string.Empty;
+            this.iSBN = 0; this.quantity = 0; this.stock = 0; this.price = 0; this.title = string.Empty; this.authorForename = string.Empty; this.authorSurname = string.Empty;
         }
-        public MyOrderDetail(long iSBN, int quantity, int stock,decimal price, string title, string author)
+        public MyOrderDetail(long iSBN, int quantity, int stock,decimal price, string title, string authorForename, string authorSurname)
         {
             this.iSBN = iSBN;
             this.quantity = quantity;
             this.stock = stock;
             this.price = price;
             this.title = title;
-            this.author = author;
+            this.authorForename = authorForename;
+            this.authorSurname = authorSurname;
         }
         public long ISBN
         {
@@ -54,17 +55,27 @@ namespace BookShop2
             get { return this.title; }
             set { this.title = value; }
         }
-        public string Author
+        public string AuthorForename
         {
-            get { return this.author; }
-            set { this.author = value; }
+            get { return this.authorForename; }
+            set { this.authorForename = value; }
         }
+        public string AuthorSurname
+        {
+            get { return this.authorSurname; }
+            set { this.authorSurname = value; }
+        }
+//        public string Author
+//        {
+//            get { return this.author; }
+//            set { this.author = value; }
+//        }
 
-/*        public override string ToString() 
-        {
-            return String.Format("{0},{0},{0}", MyOrderDetail.ISBN, MyOrderDetail.Quantity, MyOrderDetail.Price);
-        }
-*/
+        /*        public override string ToString() 
+                {
+                    return String.Format("{0},{0},{0}", MyOrderDetail.ISBN, MyOrderDetail.Quantity, MyOrderDetail.Price);
+                }
+        */
 
     }
 }

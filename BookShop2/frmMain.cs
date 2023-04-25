@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,10 +14,13 @@ namespace BookShop2
 {
     public partial class frmMain : Form
     {
-
+        public static frmMain instance; //Allows form to be controlled from other forms (frmShop and frmCheckout)
         public frmMain()
         {
             InitializeComponent();
+            instance = this;
+            _ = lblCartQuant;   //Allows cart label to be updated from frmShop and frmCheckout
+            
         }
 
         private void frmMain_Load(object sender, EventArgs e)

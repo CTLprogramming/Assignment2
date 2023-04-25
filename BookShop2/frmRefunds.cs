@@ -56,11 +56,14 @@ namespace BookShop2
             //enable relevant alpha buttons
             foreach (DataRow dr in dsBookShop.Tables["Names"].Rows)
             {
-                no = dr["Surname"].ToString()[0] - 65;
-                btns[no].Enabled = true;
-                btns[no].BackColor = Color.FromArgb(45, 80, 150);
-                btns[no].FlatAppearance.BorderColor = Color.FromArgb(45, 80, 150);
-                btns[no].ForeColor = Color.White;
+                if (!Convert.IsDBNull(dr["Surname"]))
+                {
+                    no = dr["Surname"].ToString()[0] - 65;
+                    btns[no].Enabled = true;
+                    btns[no].BackColor = Color.FromArgb(45, 80, 150);
+                    btns[no].FlatAppearance.BorderColor = Color.FromArgb(45, 80, 150);
+                    btns[no].ForeColor = Color.White;
+                }
             }
 
             //set up dataAdapter for customer details for the listbox
@@ -71,15 +74,15 @@ namespace BookShop2
             daCustomers = new SqlDataAdapter(cmdCustomerDetails);
             daCustomers.FillSchema(dsBookShop, SchemaType.Source, "Customer");
 
-/*            //set up dataAdapter for orders listbox
+            /*            //set up dataAdapter for orders listbox
 
-            sqlOrder = @"select * from CustOrder ";
-            cmdOrder = new SqlCommand(sqlOrder, conn);
-            cmdOrder.Parameters.Add("@CustNo", SqlDbType.VarChar);
-            cmdOrder.Parameters["@CustNo"].Value = "";
-            daOrder = new SqlDataAdapter(cmdOrder);
-            daOrder.FillSchema(dsBookShop, SchemaType.Source, "CustOrder");
-*/
+                        sqlOrder = @"select * from CustOrder ";
+                        cmdOrder = new SqlCommand(sqlOrder, conn);
+                        cmdOrder.Parameters.Add("@CustNo", SqlDbType.VarChar);
+                        cmdOrder.Parameters["@CustNo"].Value = "";
+                        daOrder = new SqlDataAdapter(cmdOrder);
+                        daOrder.FillSchema(dsBookShop, SchemaType.Source, "CustOrder");
+            */
             //set up dataAdapter for order
             sqlOrder = @"Select * from CustOrder";
             cmdOrder = new SqlCommand(sqlOrder, conn);
@@ -94,6 +97,7 @@ namespace BookShop2
             daOrderDetail = new SqlDataAdapter(cmdOrderDetail);
             cmdBOrderDetail = new SqlCommandBuilder(daOrderDetail);
             daOrderDetail.FillSchema(dsBookShop, SchemaType.Source, "CustOrderDetails");
+            daOrderDetail.Fill(dsBookShop, "CustOrderDetails");
 
             //set up dataAdapter for book
             sqlBook = @"Select * from Book";
@@ -132,14 +136,15 @@ namespace BookShop2
             DataRow drCustomer = dsBookShop.Tables["Customer"].Rows.Find(lstCustomer.SelectedValue);
             lblCustomer.Text = drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString() + " (" + lstCustomer.SelectedValue.ToString() + ")";
             custNo = Convert.ToInt32(drCustomer["CustNo"].ToString());
-            orderDetails.Clear();
-            flpOrderDetails.Controls.Clear();
+//            orderDetails.Clear();
+//            flpOrderDetails.Controls.Clear();
 
         }
 
 
         private void lstCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblRefundTotal.Text = "";
             lstOrders.DataSource = null;
             orderDetails.Clear();
             if (lstCustomer.SelectedItem != null)
@@ -156,6 +161,13 @@ namespace BookShop2
                     lstOrders.DisplayMember = "OrderAndDate";
                 }
             }
+            if (lstOrders.Items.Count == 0)
+            {
+                btnIgnoreDelete.Visible = false;
+                btnIgnoreDelete.Text = "Ignore";
+                lblSelectQuantity.Visible = false;
+
+            }
         }
 
         private void lstCustomer_Click(object sender, EventArgs e)
@@ -170,6 +182,7 @@ namespace BookShop2
 
         private void lstOrders_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblRefundTotal.Text = "";
             flpOrderDetails.Controls.Clear();
             if (lstOrders.SelectedItem != null)
             {
@@ -178,7 +191,7 @@ namespace BookShop2
                 {
                     int orderNo = Convert.ToInt32(drv["CustOrderNo"]);
 
-                    SqlDataAdapter daOrderDetails = new SqlDataAdapter(@"Select C.CustOrderNo, C.ISBN, Quantity, BookTitle, Author, Price FROM CustOrderDetails C JOIN Book B on C.ISBN = B.ISBN WHERE CustOrderNo = @RefundDetails", connStr);
+                    SqlDataAdapter daOrderDetails = new SqlDataAdapter(@"Select C.CustOrderNo, C.ISBN, Quantity, BookTitle, AuthorForename, AuthorSurname, Price FROM CustOrderDetails C JOIN Book B on C.ISBN = B.ISBN WHERE CustOrderNo = @RefundDetails", connStr);
                     daOrderDetails.SelectCommand.Parameters.AddWithValue("@RefundDetails", orderNo);
                     DataTable dtOrderDetails = new DataTable();
                     daOrderDetails.Fill(dtOrderDetails);
@@ -191,7 +204,9 @@ namespace BookShop2
                         DataRow dr = dtOrderDetails.Rows[i];
                         myOrderDetail.ISBN = Convert.ToInt64(dr["ISBN"]);
                         myOrderDetail.Title = dr["BookTitle"].ToString();
-                        myOrderDetail.Author = dr["Author"].ToString();
+                        myOrderDetail.AuthorForename = dr["AuthorForename"].ToString();
+                        myOrderDetail.AuthorSurname = dr["AuthorSurname"].ToString();
+
                         myOrderDetail.Price = Convert.ToDecimal(dr["Price"]);
                         myOrderDetail.Quantity = Convert.ToInt32(dr["Quantity"]);
                         myOrderDetail.Stock = 0;        //Stores the number of books to be refunded and restocked
@@ -220,7 +235,7 @@ namespace BookShop2
                         flpOrderDetails.Controls.Add(label1);
                         flpOrderDetails.Controls.Add(combo);
 
-                        label0.Text = orderDetails[i].Title + "\n" + orderDetails[i].Author;
+                        label0.Text = orderDetails[i].Title + "\n" + orderDetails[i].AuthorForename + " " + orderDetails[i].AuthorSurname;
                         label1.Text = String.Format("{0:0.00}", orderDetails[i].Price);
 
                         combo.Items.Clear();
@@ -235,6 +250,13 @@ namespace BookShop2
 
                 }
             }
+            if (lstOrders.Items.Count != 0)
+            {
+                btnIgnoreDelete.Visible = true;
+                lblSelectQuantity.Visible = true;
+            }
+
+
         }
 
         private void combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -252,7 +274,7 @@ namespace BookShop2
                 else
                     lblRefundTotal.Text = "";
 
-                if (lblCustomer.Text.Length > 0 && lblRefundTotal.Text.Length > 0);
+                if (lblCustomer.Text.Length > 0 && lblRefundTotal.Text.Length > 0)
                     btnConfirmCustomer.Visible = true;
             }
         }
@@ -315,7 +337,7 @@ namespace BookShop2
                 try
                 {
                     drOrderDetail = dsBookShop.Tables["CustOrderDetails"].NewRow();
-                    if(orderDetails[i].Stock>0)
+                    if (orderDetails[i].Stock > 0)
                     {
                         drOrderDetail["ISBN"] = orderDetails[i].ISBN;
                         drOrderDetail["CustOrderNo"] = custOrderNo;
@@ -348,7 +370,6 @@ namespace BookShop2
                     daBook.Update(dsBookShop, "Book");
 
                     if (i == orderDetails.Count - 1)
-
                         MessageBox.Show("Return has been processed", "Return");
                 }
                 catch (Exception ex)
@@ -373,5 +394,90 @@ namespace BookShop2
             custOrderNo = (int.Parse(drOrder["CustOrderNo"].ToString()) + 1);
         }
 
+        private void btnIgnoreDelete_Click(object sender, EventArgs e)
+        {
+            if (btnIgnoreDelete.Text == "Ignore")
+            {
+                btnIgnoreDelete.Text = "Delete";
+                btnIgnoreDelete.BackColor = Color.FromArgb(45, 80, 150);
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Delete entire record of order without refund?", "Delete Order", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    for (int i = 0; i < orderDetails.Count; i++)  //returns ordered stock to Book Table in database.
+                    {
+                        drBook = dsBookShop.Tables["Book"].Rows.Find(orderDetails[i].ISBN);
+
+                        try
+                        {
+                            drBook = dsBookShop.Tables["Book"].Rows.Find(orderDetails[i].ISBN);
+
+                            drBook.BeginEdit();
+
+                            drBook["Stock"] = Convert.ToInt16(drBook["Stock"].ToString()) + orderDetails[i].Quantity;
+
+                            drBook.EndEdit();
+                            daBook.Update(dsBookShop, "Book");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
+                            MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                        }
+                    }
+
+                    DataRowView drv = lstOrders.SelectedItem as DataRowView;
+                    int orderNo = Convert.ToInt32(drv["CustOrderNo"]);
+
+                    for (int i = 0; i < dsBookShop.Tables["CustOrderDetails"].Rows.Count; i++)  //Deletes all instances of the order detail in the database
+                    {
+                        try
+                        {
+                            drOrderDetail = dsBookShop.Tables["CustOrderDetails"].Rows[i];
+                            if (int.Parse(drOrderDetail["CustOrderNo"].ToString()) == orderNo)
+                            {
+                                drOrderDetail.Delete();
+                                daOrderDetail.Update(dsBookShop, "CustOrderDetails");
+                            }
+                                                      
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
+                            MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                        }
+                    }
+
+                    for (int i = 0; i < dsBookShop.Tables["CustOrder"].Rows.Count; i++)  //Deletes all instances of the order in the database
+                    {
+                        try
+                        {
+                            drOrder = dsBookShop.Tables["CustOrder"].Rows[i];
+                            if (int.Parse(drOrder["CustOrderNo"].ToString()) == orderNo)
+                            {
+                                drOrder.Delete();
+                                daOrder.Update(dsBookShop, "CustOrder");
+                            }
+
+
+                            if (i == dsBookShop.Tables["CustOrder"].Rows.Count - 1)
+                                MessageBox.Show("Stock has been returned, delete has been processed", "Delete");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
+                            MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                        }
+                    }
+
+                }
+                else
+                {
+                    //Don't delete and continue
+                }
+            }
+        }
     }
 }

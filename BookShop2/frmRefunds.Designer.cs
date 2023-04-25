@@ -65,6 +65,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnConfirmRefund = new System.Windows.Forms.Button();
             this.btnConfirmCustomer = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnIgnoreDelete = new System.Windows.Forms.Button();
+            this.lblSelectQuantity = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.pnlButtons.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,7 +80,7 @@
             this.lstCustomer.ItemHeight = 29;
             this.lstCustomer.Location = new System.Drawing.Point(35, 214);
             this.lstCustomer.Name = "lstCustomer";
-            this.lstCustomer.Size = new System.Drawing.Size(404, 584);
+            this.lstCustomer.Size = new System.Drawing.Size(404, 555);
             this.lstCustomer.TabIndex = 65;
             this.lstCustomer.Click += new System.EventHandler(this.lstCustomer_Click);
             this.lstCustomer.SelectedIndexChanged += new System.EventHandler(this.lstCustomer_SelectedIndexChanged);
@@ -84,7 +89,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(323, 53);
+            this.label1.Location = new System.Drawing.Point(323, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(166, 29);
             this.label1.TabIndex = 64;
@@ -119,7 +124,7 @@
             this.pnlButtons.Controls.Add(this.button25);
             this.pnlButtons.Controls.Add(this.button26);
             this.pnlButtons.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.pnlButtons.Location = new System.Drawing.Point(35, 100);
+            this.pnlButtons.Location = new System.Drawing.Point(35, 56);
             this.pnlButtons.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlButtons.Name = "pnlButtons";
             this.pnlButtons.Size = new System.Drawing.Size(807, 112);
@@ -625,7 +630,7 @@
             this.flpOrderDetails.Location = new System.Drawing.Point(996, 177);
             this.flpOrderDetails.Margin = new System.Windows.Forms.Padding(2);
             this.flpOrderDetails.Name = "flpOrderDetails";
-            this.flpOrderDetails.Size = new System.Drawing.Size(846, 665);
+            this.flpOrderDetails.Size = new System.Drawing.Size(846, 592);
             this.flpOrderDetails.TabIndex = 91;
             // 
             // lstOrders
@@ -635,7 +640,7 @@
             this.lstOrders.ItemHeight = 29;
             this.lstOrders.Location = new System.Drawing.Point(438, 214);
             this.lstOrders.Name = "lstOrders";
-            this.lstOrders.Size = new System.Drawing.Size(404, 584);
+            this.lstOrders.Size = new System.Drawing.Size(404, 555);
             this.lstOrders.TabIndex = 92;
             this.lstOrders.SelectedIndexChanged += new System.EventHandler(this.lstOrders_SelectedIndexChanged);
             // 
@@ -719,11 +724,79 @@
             this.btnConfirmCustomer.Visible = false;
             this.btnConfirmCustomer.Click += new System.EventHandler(this.btnConfirmCustomer_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(30, 782);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(897, 29);
+            this.label2.TabIndex = 100;
+            this.label2.Text = "(Orders should not be deleted except where placed in error.  Please issue refunds" +
+    ")";
+            // 
+            // btnIgnoreDelete
+            // 
+            this.btnIgnoreDelete.AutoSize = true;
+            this.btnIgnoreDelete.BackColor = System.Drawing.Color.Silver;
+            this.btnIgnoreDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.btnIgnoreDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.btnIgnoreDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnIgnoreDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIgnoreDelete.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnIgnoreDelete.Location = new System.Drawing.Point(40, 825);
+            this.btnIgnoreDelete.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.btnIgnoreDelete.Name = "btnIgnoreDelete";
+            this.btnIgnoreDelete.Size = new System.Drawing.Size(154, 39);
+            this.btnIgnoreDelete.TabIndex = 102;
+            this.btnIgnoreDelete.Text = "Ignore";
+            this.btnIgnoreDelete.UseVisualStyleBackColor = false;
+            this.btnIgnoreDelete.Visible = false;
+            this.btnIgnoreDelete.Click += new System.EventHandler(this.btnIgnoreDelete_Click);
+            // 
+            // lblSelectQuantity
+            // 
+            this.lblSelectQuantity.AutoSize = true;
+            this.lblSelectQuantity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSelectQuantity.Location = new System.Drawing.Point(1223, 782);
+            this.lblSelectQuantity.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSelectQuantity.Name = "lblSelectQuantity";
+            this.lblSelectQuantity.Size = new System.Drawing.Size(427, 29);
+            this.lblSelectQuantity.TabIndex = 103;
+            this.lblSelectQuantity.Text = "Please select a quantity to be refunded";
+            this.lblSelectQuantity.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(39, 182);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(357, 29);
+            this.label4.TabIndex = 104;
+            this.label4.Text = "Surname, Name, (Customer No)";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(443, 182);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(192, 29);
+            this.label6.TabIndex = 105;
+            this.label6.Text = "Order No. (Date)";
+            // 
             // frmRefunds
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1881, 878);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblSelectQuantity);
+            this.Controls.Add(this.btnIgnoreDelete);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnConfirmRefund);
             this.Controls.Add(this.lblRefundTotal);
             this.Controls.Add(this.btnConfirmCustomer);
@@ -784,5 +857,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnConfirmRefund;
         private System.Windows.Forms.Button btnConfirmCustomer;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnIgnoreDelete;
+        private System.Windows.Forms.Label lblSelectQuantity;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
     }
 }

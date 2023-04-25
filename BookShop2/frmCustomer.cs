@@ -52,11 +52,14 @@ namespace BookShop2
             //enable relevant alpha buttons
             foreach (DataRow dr in dsBookShop.Tables["Names"].Rows)
             {
-                no = dr["Surname"].ToString()[0] - 65;
-                btns[no].Enabled = true;
-                btns[no].BackColor = Color.FromArgb(45, 80, 150);
-                btns[no].FlatAppearance.BorderColor = Color.FromArgb(45, 80, 150);
-                btns[no].ForeColor = Color.White;
+                if (!Convert.IsDBNull(dr["Surname"]))
+                {
+                    no = dr["Surname"].ToString()[0] - 65;
+                    btns[no].Enabled = true;
+                    btns[no].BackColor = Color.FromArgb(45, 80, 150);
+                    btns[no].FlatAppearance.BorderColor = Color.FromArgb(45, 80, 150);
+                    btns[no].ForeColor = Color.White;
+                }
             }
 
             //set up dataAdapter for customer details for the listbox
@@ -287,6 +290,61 @@ namespace BookShop2
             lblCustNo.Text = (int.Parse(drCustomer["CustNo"].ToString()) + 1).ToString();
         }
 
+        private void btnDeleteCust_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Delete Customer details? (order history will be retained anonymously)", "Delete Customer", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                try
+                {
+
+                    drCustomer.BeginEdit();
+
+                    drCustomer["CustNo"] = Convert.ToInt32(lblCustNo.Text.Trim());
+                    drCustomer["CustTitle"] = null;
+                    drCustomer["Forename"] = null;
+                    drCustomer["Surname"] = null;
+                    drCustomer["CustStreet"] = null;
+                    drCustomer["CustTown"] = null;
+                    drCustomer["CustCounty"] = null;
+                    drCustomer["CustPostcode"] = null;
+                    drCustomer["CustTel"] = null;
+                    drCustomer["CustEmail"] = null;
+                    drCustomer["Marketing"] = 0;
+
+                    drCustomer.EndEdit();
+                    daCustomer.Update(dsBookShop, "Customer");
+
+                    MessageBox.Show("Customer Details Deleted", "Customer");
+
+                    btnSaveCust.Visible = false;
+                    btnClearCust.Visible = true;
+                    btnEditCust.Visible = true;
+                    btnDeleteCust.Visible = true;
+
+                    cmbTitle.Enabled = false;
+                    txtSurname.Enabled = false;
+                    txtForename.Enabled = false;
+                    txtStreet.Enabled = false;
+                    txtTown.Enabled = false;
+                    txtCounty.Enabled = false;
+                    txtPostcode.Enabled = false;
+                    txtTelNo.Enabled = false;
+                    txtEmail.Enabled = false;
+                    cmbMarketing.Enabled = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
+                    MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                //Don't delete and continue
+            }
+        }
+
         private void btnEditCust_Click(object sender, EventArgs e)
         {
             cmbTitle.Enabled = true;
@@ -494,7 +552,7 @@ namespace BookShop2
             catch (MyException MyEx)
             {
                 ok = false;
-                errP.SetError(lblCustNo, MyEx.toString());     // ***ASK errP
+                errP.SetError(lblCustNo, MyEx.toString());     
             }
             try
             {

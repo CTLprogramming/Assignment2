@@ -32,7 +32,6 @@
             this.btnHome = new System.Windows.Forms.Button();
             this.pnlCart = new System.Windows.Forms.Panel();
             this.lblCartQuant = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lblPageTitle = new System.Windows.Forms.Label();
             this.btnInvoice = new System.Windows.Forms.Button();
@@ -77,9 +76,9 @@
             this.btnHome.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnHome.BackgroundImage = global::BookShop2.Properties.Resources.btnLogo;
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnHome.Location = new System.Drawing.Point(109, 8);
+            this.btnHome.Location = new System.Drawing.Point(62, 8);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(114, 90);
+            this.btnHome.Size = new System.Drawing.Size(114, 89);
             this.btnHome.TabIndex = 12;
             this.btnHome.UseVisualStyleBackColor = true;
             this.btnHome.Click += new System.EventHandler(this.frmMain_Load);
@@ -89,12 +88,11 @@
             this.pnlCart.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pnlCart.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pnlCart.Controls.Add(this.lblCartQuant);
-            this.pnlCart.Controls.Add(this.label2);
             this.pnlCart.Controls.Add(this.label1);
-            this.pnlCart.Location = new System.Drawing.Point(1619, 10);
+            this.pnlCart.Location = new System.Drawing.Point(1611, 9);
             this.pnlCart.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.pnlCart.Name = "pnlCart";
-            this.pnlCart.Size = new System.Drawing.Size(180, 86);
+            this.pnlCart.Size = new System.Drawing.Size(170, 86);
             this.pnlCart.TabIndex = 11;
             this.pnlCart.Click += new System.EventHandler(this.btnCheckout_Click);
             // 
@@ -104,7 +102,7 @@
             this.lblCartQuant.AutoSize = true;
             this.lblCartQuant.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCartQuant.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(90)))), ((int)(((byte)(175)))));
-            this.lblCartQuant.Location = new System.Drawing.Point(152, 25);
+            this.lblCartQuant.Location = new System.Drawing.Point(147, 26);
             this.lblCartQuant.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblCartQuant.Name = "lblCartQuant";
             this.lblCartQuant.Size = new System.Drawing.Size(26, 29);
@@ -113,32 +111,18 @@
             this.lblCartQuant.Text = "0";
             this.lblCartQuant.Click += new System.EventHandler(this.btnCheckout_Click);
             // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(90)))), ((int)(((byte)(175)))));
-            this.label2.Location = new System.Drawing.Point(75, 25);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 29);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "items";
-            this.label2.Click += new System.EventHandler(this.btnCheckout_Click);
-            // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(90)))), ((int)(((byte)(175)))));
-            this.label1.Location = new System.Drawing.Point(3, 25);
+            this.label1.Location = new System.Drawing.Point(-3, 25);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 29);
+            this.label1.Size = new System.Drawing.Size(147, 29);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Cart - ";
+            this.label1.Text = "Cart - items";
             this.label1.Click += new System.EventHandler(this.btnCheckout_Click);
             // 
             // lblPageTitle
@@ -147,7 +131,7 @@
             this.lblPageTitle.AutoSize = true;
             this.lblPageTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPageTitle.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblPageTitle.Location = new System.Drawing.Point(835, 14);
+            this.lblPageTitle.Location = new System.Drawing.Point(836, 14);
             this.lblPageTitle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblPageTitle.Name = "lblPageTitle";
             this.lblPageTitle.Size = new System.Drawing.Size(174, 37);
@@ -218,7 +202,7 @@
             this.btnSuppliers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSuppliers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSuppliers.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnSuppliers.Location = new System.Drawing.Point(1147, 57);
+            this.btnSuppliers.Location = new System.Drawing.Point(1148, 57);
             this.btnSuppliers.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.btnSuppliers.Name = "btnSuppliers";
             this.btnSuppliers.Size = new System.Drawing.Size(132, 46);
@@ -255,7 +239,7 @@
             this.btnRefunds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefunds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefunds.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnRefunds.Location = new System.Drawing.Point(857, 57);
+            this.btnRefunds.Location = new System.Drawing.Point(856, 57);
             this.btnRefunds.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.btnRefunds.Name = "btnRefunds";
             this.btnRefunds.Size = new System.Drawing.Size(132, 46);
@@ -312,7 +296,7 @@
             this.btnShop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnShop.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShop.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnShop.Location = new System.Drawing.Point(277, 57);
+            this.btnShop.Location = new System.Drawing.Point(278, 57);
             this.btnShop.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.btnShop.Name = "btnShop";
             this.btnShop.Size = new System.Drawing.Size(132, 46);
@@ -354,8 +338,6 @@
 
         private System.Windows.Forms.Panel pnlBanner;
         private System.Windows.Forms.Panel pnlCart;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblPageTitle;
         private System.Windows.Forms.Button btnInvoice;
         private System.Windows.Forms.Button btnStock;
@@ -369,6 +351,7 @@
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Button btnHome;
         public System.Windows.Forms.Label lblCartQuant;
+        private System.Windows.Forms.Label label1;
     }
 }
 
