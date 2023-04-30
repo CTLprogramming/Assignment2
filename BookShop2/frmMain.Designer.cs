@@ -40,7 +40,6 @@
             this.btnSuppliers = new System.Windows.Forms.Button();
             this.btnCheckout = new System.Windows.Forms.Button();
             this.btnRefunds = new System.Windows.Forms.Button();
-            this.btnReceipts = new System.Windows.Forms.Button();
             this.btnCustomer = new System.Windows.Forms.Button();
             this.btnShop = new System.Windows.Forms.Button();
             this.pnlMain = new System.Windows.Forms.Panel();
@@ -62,7 +61,6 @@
             this.pnlBanner.Controls.Add(this.btnSuppliers);
             this.pnlBanner.Controls.Add(this.btnCheckout);
             this.pnlBanner.Controls.Add(this.btnRefunds);
-            this.pnlBanner.Controls.Add(this.btnReceipts);
             this.pnlBanner.Controls.Add(this.btnCustomer);
             this.pnlBanner.Controls.Add(this.btnShop);
             this.pnlBanner.Location = new System.Drawing.Point(3, 0);
@@ -137,6 +135,7 @@
             this.lblPageTitle.Size = new System.Drawing.Size(174, 37);
             this.lblPageTitle.TabIndex = 10;
             this.lblPageTitle.Text = "Book Shop";
+            this.lblPageTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // btnInvoice
             // 
@@ -239,33 +238,15 @@
             this.btnRefunds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefunds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefunds.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnRefunds.Location = new System.Drawing.Point(856, 57);
+            this.btnRefunds.Location = new System.Drawing.Point(713, 57);
             this.btnRefunds.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.btnRefunds.Name = "btnRefunds";
-            this.btnRefunds.Size = new System.Drawing.Size(132, 46);
+            this.btnRefunds.Size = new System.Drawing.Size(350, 46);
             this.btnRefunds.TabIndex = 5;
-            this.btnRefunds.Text = "Refunds";
+            this.btnRefunds.Text = "  Receipts  and  Refunds";
+            this.btnRefunds.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRefunds.UseVisualStyleBackColor = false;
             this.btnRefunds.Click += new System.EventHandler(this.btnRefunds_Click);
-            // 
-            // btnReceipts
-            // 
-            this.btnReceipts.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnReceipts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.btnReceipts.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.btnReceipts.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.btnReceipts.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnReceipts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReceipts.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReceipts.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnReceipts.Location = new System.Drawing.Point(712, 57);
-            this.btnReceipts.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.btnReceipts.Name = "btnReceipts";
-            this.btnReceipts.Size = new System.Drawing.Size(132, 46);
-            this.btnReceipts.TabIndex = 4;
-            this.btnReceipts.Text = "Receipts";
-            this.btnReceipts.UseVisualStyleBackColor = false;
-            this.btnReceipts.Click += new System.EventHandler(this.btnReceipts_Click);
             // 
             // btnCustomer
             // 
@@ -345,7 +326,6 @@
         private System.Windows.Forms.Button btnSuppliers;
         private System.Windows.Forms.Button btnCheckout;
         private System.Windows.Forms.Button btnRefunds;
-        private System.Windows.Forms.Button btnReceipts;
         private System.Windows.Forms.Button btnCustomer;
         private System.Windows.Forms.Button btnShop;
         private System.Windows.Forms.Panel pnlMain;

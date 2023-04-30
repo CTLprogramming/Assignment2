@@ -46,7 +46,7 @@ namespace BookShop2
             connStr = @"Data Source = .\sqlexpress; Initial Catalog = BookShop; Integrated Security = true";
 
             //set up dataAdapter for book details for the book listbox
-            sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, BookTitle + '  -  ' + AuthorForename + '  ' +  AuthorSurname as details from BOOK order by BookTitle";
+            sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, BookTitle + '   -   ' + AuthorForename + '  ' +  AuthorSurname as details from BOOK order by BookTitle";
             conn = new SqlConnection(connStr);
             cmdBook = new SqlCommand(sqlBook, conn);
             daBook = new SqlDataAdapter(cmdBook);
@@ -79,12 +79,12 @@ namespace BookShop2
         {
             if (btnAuthorTitle.Text == "Author")
             {
-                sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, AuthorForename +' '+ AuthorSurname + '  -  ' +  BookTitle as details from BOOK order by AuthorSurname";
+                sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, AuthorForename +' '+ AuthorSurname + '   -   ' +  BookTitle as details from BOOK order by AuthorSurname";
                 btnAuthorTitle.Text = "Title";
             }
             else
             {
-                sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, BookTitle + '  -  ' +  AuthorForename +', '+ AuthorSurname as details from BOOK order by BookTitle";
+                sqlBook = @"Select ISBN, BookTitle, AuthorForename, AuthorSurname, Stock, Price, SupplNo, BookTitle + '   -   ' +  AuthorForename +', '+ AuthorSurname as details from BOOK order by BookTitle";
                 btnAuthorTitle.Text = "Author";
             }
             cmdBook = new SqlCommand(sqlBook, conn);
@@ -231,7 +231,7 @@ namespace BookShop2
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {   
-            SqlDataAdapter daBooks = new SqlDataAdapter("Select *, BookTitle + '  -  ' + AuthorForename + '  ' +  AuthorSurname as details from BOOK WHERE BookTitle LIKE '%' +@parm1 +'%' OR AuthorForename LIKE '%' +@parm1 +'%' OR AuthorSurname LIKE '%' +@parm1 +'%'", connStr);
+            SqlDataAdapter daBooks = new SqlDataAdapter("Select *, BookTitle + '   -   ' + AuthorForename + '  ' +  AuthorSurname as details from BOOK WHERE BookTitle LIKE '%' +@parm1 +'%' OR AuthorForename LIKE '%' +@parm1 +'%' OR AuthorSurname LIKE '%' +@parm1 +'%'", connStr);
             daBooks.SelectCommand.Parameters.AddWithValue("@parm1", txtSearch.Text);
             DataTable dtBooks = new DataTable();
             daBooks.Fill(dtBooks);

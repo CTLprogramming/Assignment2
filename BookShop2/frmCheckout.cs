@@ -248,7 +248,7 @@ namespace BookShop2
                 MyGlobals.customer = null;
                 MyGlobals.cart = 0;
                 frmMain.instance.lblCartQuant.Text = MyGlobals.cart.ToString();
-                MyGlobals.frmReceipt = true;
+                MyGlobals.frmRefunds = true;
                 Close();
 
             }

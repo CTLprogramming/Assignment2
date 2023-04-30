@@ -202,7 +202,7 @@
             this.btnReceiptCust.TabIndex = 84;
             this.btnReceiptCust.Text = "Receipts";
             this.btnReceiptCust.UseVisualStyleBackColor = false;
-            this.btnReceiptCust.Click += new System.EventHandler(this.btnReceiptCust_Click);
+            this.btnReceiptCust.Click += new System.EventHandler(this.btnRefunds_Click);
             // 
             // btnClearCust
             // 

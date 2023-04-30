@@ -72,21 +72,9 @@ namespace BookShop2
             frmCheckout.Show();
         }
 
-        private void btnReceipts_Click(object sender, EventArgs e)
-        {
-            lblPageTitle.Text = "Receipts";
-            btnHome.Visible = true;
-            frmReceipts frmReceipts = new frmReceipts();
-            frmReceipts.TopLevel = false;
-            frmReceipts.FormBorderStyle = FormBorderStyle.None;
-            frmReceipts.WindowState = FormWindowState.Maximized;
-            pnlMain.Controls.Add(frmReceipts);
-            frmReceipts.Show();
-        }
-
         private void btnRefunds_Click(object sender, EventArgs e)
         {
-            lblPageTitle.Text = "Refunds";
+            lblPageTitle.Text = "Receipts and Refunds";
             btnHome.Visible = true;
             frmRefunds frmRefunds = new frmRefunds();
             frmRefunds.TopLevel = false;
@@ -112,7 +100,7 @@ namespace BookShop2
             }
             if (MyGlobals.frmReceipt)
             {
-                btnReceipts_Click(sender, e);
+                btnRefunds_Click(sender, e);
             }
             if (MyGlobals.frmRefunds)
             {

@@ -182,7 +182,7 @@ namespace BookShop2
 
         private void btnReceiptCust_Click(object sender, EventArgs e)
         {
-            MyGlobals.frmReceipt = true;
+            MyGlobals.frmRefunds = true;
             Close();
         }
 

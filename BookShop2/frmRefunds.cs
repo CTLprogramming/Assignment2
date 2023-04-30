@@ -25,6 +25,7 @@ namespace BookShop2
         String connStr, sqlNames, sqlOrder, sqlOrderDetails, sqlOrderDetail, sqlCustomerDetails, sqlBook;
 
         List<MyOrderDetail> orderDetails = new List<MyOrderDetail>();  //List to store rows
+        MyCustomer myCustomer = new MyCustomer();
         int custOrderNo = 0;
         int custNo = 0;
 
@@ -74,15 +75,6 @@ namespace BookShop2
             daCustomers = new SqlDataAdapter(cmdCustomerDetails);
             daCustomers.FillSchema(dsBookShop, SchemaType.Source, "Customer");
 
-            /*            //set up dataAdapter for orders listbox
-
-                        sqlOrder = @"select * from CustOrder ";
-                        cmdOrder = new SqlCommand(sqlOrder, conn);
-                        cmdOrder.Parameters.Add("@CustNo", SqlDbType.VarChar);
-                        cmdOrder.Parameters["@CustNo"].Value = "";
-                        daOrder = new SqlDataAdapter(cmdOrder);
-                        daOrder.FillSchema(dsBookShop, SchemaType.Source, "CustOrder");
-            */
             //set up dataAdapter for order
             sqlOrder = @"Select * from CustOrder";
             cmdOrder = new SqlCommand(sqlOrder, conn);
@@ -134,10 +126,20 @@ namespace BookShop2
             lstCustomer.ValueMember = "CustNo";
 
             DataRow drCustomer = dsBookShop.Tables["Customer"].Rows.Find(lstCustomer.SelectedValue);
+            myCustomer.IdNo = Convert.ToInt16(drCustomer["CustNo"].ToString());
+            myCustomer.Title = drCustomer["CustTitle"].ToString();
+            myCustomer.Forename = drCustomer["Forename"].ToString();
+            myCustomer.Surname = drCustomer["Surname"].ToString();
+            myCustomer.Street = drCustomer["CustStreet"].ToString();
+            myCustomer.Town = drCustomer["CustTown"].ToString();
+            myCustomer.County = drCustomer["CustCounty"].ToString();
+            myCustomer.Postcode = drCustomer["CustPostcode"].ToString();
+            myCustomer.TelNo = drCustomer["CustTel"].ToString();
+            myCustomer.Email = drCustomer["CustEmail"].ToString();
+            myCustomer.Marketing = Convert.ToBoolean(drCustomer["Marketing"].ToString());
+
             lblCustomer.Text = drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString() + " (" + lstCustomer.SelectedValue.ToString() + ")";
             custNo = Convert.ToInt32(drCustomer["CustNo"].ToString());
-//            orderDetails.Clear();
-//            flpOrderDetails.Controls.Clear();
 
         }
 
@@ -152,8 +154,7 @@ namespace BookShop2
                 DataRowView drv = lstCustomer.SelectedItem as DataRowView;
                 if (drv != null)
                 {
-                    //                    int custNo = (int)drv["CustNo"];
-                    SqlDataAdapter daOrders = new SqlDataAdapter("SELECT *, CONVERT(VARCHAR(10), CustOrderNo) + '    -    (' + CONVERT(VARCHAR, CustOrderDate,23) + ') ' as OrderAndDate FROM CustOrder WHERE CustNo = @CustNo", connStr);
+                    SqlDataAdapter daOrders = new SqlDataAdapter("SELECT *, CONVERT(VARCHAR(10), CustOrderNo) + '    -    (' + CONVERT(VARCHAR, CustOrderDate,23) + ') ' as OrderAndDate FROM CustOrder WHERE CustNo = @CustNo AND  Refund = 0", connStr);  //excludes refund orders
                     daOrders.SelectCommand.Parameters.AddWithValue("@CustNo", (int)drv["CustNo"]);
                     DataTable dtOrders = new DataTable();
                     daOrders.Fill(dtOrders);
@@ -172,11 +173,24 @@ namespace BookShop2
 
         private void lstCustomer_Click(object sender, EventArgs e)
         {
+
             DataRow drCustomer = dsBookShop.Tables["Customer"].Rows.Find(lstCustomer.SelectedValue);
             lblCustomer.Text = drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString() + " (" + lstCustomer.SelectedValue.ToString() + ")";
             custNo = Convert.ToInt32(drCustomer["CustNo"].ToString());
             orderDetails.Clear();
             flpOrderDetails.Controls.Clear();
+
+            myCustomer.IdNo = Convert.ToInt16(drCustomer["CustNo"].ToString());
+            myCustomer.Title = drCustomer["CustTitle"].ToString();
+            myCustomer.Forename = drCustomer["Forename"].ToString();
+            myCustomer.Surname = drCustomer["Surname"].ToString();
+            myCustomer.Street = drCustomer["CustStreet"].ToString();
+            myCustomer.Town = drCustomer["CustTown"].ToString();
+            myCustomer.County = drCustomer["CustCounty"].ToString();
+            myCustomer.Postcode = drCustomer["CustPostcode"].ToString();
+            myCustomer.TelNo = drCustomer["CustTel"].ToString();
+            myCustomer.Email = drCustomer["CustEmail"].ToString();
+            myCustomer.Marketing = Convert.ToBoolean(drCustomer["Marketing"].ToString());
         }
 
 
@@ -184,8 +198,13 @@ namespace BookShop2
         {
             lblRefundTotal.Text = "";
             flpOrderDetails.Controls.Clear();
+            btnPrintLabel.Visible = false;
+            btnPrintReceipt.Visible = false;
             if (lstOrders.SelectedItem != null)
             {
+                btnPrintLabel.Visible = true;
+                btnPrintReceipt.Visible = true;
+
                 DataRowView drv = lstOrders.SelectedItem as DataRowView;
                 if (drv != null)
                 {
@@ -275,7 +294,9 @@ namespace BookShop2
                     lblRefundTotal.Text = "";
 
                 if (lblCustomer.Text.Length > 0 && lblRefundTotal.Text.Length > 0)
-                    btnConfirmCustomer.Visible = true;
+                    btnConfirmRefund.Visible = true;
+                else btnConfirmRefund.Visible = false;
+
             }
         }
 
@@ -289,19 +310,71 @@ namespace BookShop2
             }
             return total;
         }
-        private void btnConfirmCustomer_Click(object sender, EventArgs e)
+        private void printLabel_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            if (lblRefundTotal.Text.Length > 0)
+            var picture = new PictureBox
             {
-                btnConfirmCustomer.Visible = false;
-                btnConfirmRefund.Visible = true;
-            }
-            else
-            {
-                MessageBox.Show("Select at least one book to return", "Quantity error");
-            }
+                Name = "pictureBox",
+                Size = new Size(16, 16),
+                Location = new Point(100, 100),
+                Image = Image.FromFile("btnLogo.png"),
+
+            };
+            e.Graphics.DrawImage(picture.Image, new Point(100, 100));
+            e.Graphics.DrawString("To:\t" + myCustomer.Title + " " + myCustomer.Forename + " " + myCustomer.Surname + "\n\t" + myCustomer.Street + "\n\t" 
+                + myCustomer.Town + "\n\t" + myCustomer.County + "\n\t" + myCustomer.Postcode, new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(500, 100));
 
         }
+
+        private void btnPrintLabel_Click(object sender, EventArgs e)
+        {
+            printPreviewDialogLabel.Document = printLabel;
+            printPreviewDialogLabel.ShowDialog();
+        }
+
+
+        private void printReceipt_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            var picture = new PictureBox
+            {
+                Name = "pictureBox",
+                Size = new Size(64, 40),
+                Location = new Point(0, 0),
+                Image = Image.FromFile("ACB_logo3.png"),
+
+            };
+            e.Graphics.DrawImage(picture.Image, new Point(380, 10));
+            e.Graphics.DrawString("RECEIPT", new Font("Arial", 24, FontStyle.Bold), Brushes.Black, new Point(100, 100));
+            e.Graphics.DrawString("" + myCustomer.Title + " " + myCustomer.Forename + " " + myCustomer.Surname, new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(100, 270));
+            e.Graphics.DrawString("" + DateTime.Now.ToString("dddd, dd MMMM yyyy"), new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(550, 270));
+
+
+            decimal total = 0;
+            for (int i = 0; i < orderDetails.Count; i++)
+            {
+                e.Graphics.DrawString("" + orderDetails[i].Title + "\n" + orderDetails[i].AuthorForename + " " + orderDetails[i].AuthorSurname, new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(100, 350+(i*60)));
+                e.Graphics.DrawString(""  + orderDetails[i].Quantity, new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(580, 350 + (i * 60)));
+                e.Graphics.DrawString("£ ", new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(630, 350 + (i * 60)));
+                e.Graphics.DrawString(""  + string.Format("{0:0.00}", orderDetails[i].Price).PadLeft(10), new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(650, 350 + (i * 60)));
+
+                total += orderDetails[i].Price * orderDetails[i].Quantity;
+                if (i == orderDetails.Count - 1)
+                {
+                    e.Graphics.DrawString(""+ string.Format("{0:0.00}", "Total:      £").PadLeft(10), new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(560, 450 + (i * 60)));
+                    e.Graphics.DrawString("" + string.Format("{0:0.00}", total).PadLeft(10), new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(650, 450 + (i * 60)));
+                }
+            }
+
+
+        }
+
+        private void btnPrintReceipt_Click(object sender, EventArgs e)
+        {
+            printPreviewDialogReceipt.Document = printReceipt;
+            printPreviewDialogReceipt.ShowDialog();
+        }
+
+
         private void btnConfirmRefund_Click(object sender, EventArgs e)
         {
             int noRows = dsBookShop.Tables["CustOrder"].Rows.Count;
@@ -378,11 +451,8 @@ namespace BookShop2
                     MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
                 }
 
-                MyGlobals.justOrdered[0] = custNo;  //Save order details to load on receipts page
-                MyGlobals.justOrdered[1] = custOrderNo;
-                MyGlobals.orderDetails.Clear();
-                MyGlobals.customer = null;
-                MyGlobals.frmReceipt = true;
+
+                MyGlobals.frmShop = true;
                 Close();
 
             }
@@ -471,7 +541,7 @@ namespace BookShop2
                             MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
                         }
                     }
-
+                    lstOrders.DataSource= null;
                 }
                 else
                 {
