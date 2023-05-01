@@ -72,7 +72,7 @@
             // btnHome
             // 
             this.btnHome.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnHome.BackgroundImage = global::BookShop2.Properties.Resources.btnLogo;
+            this.btnHome.BackgroundImage = global::BookShop2.Properties.Resources.btnLogo_png;
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnHome.Location = new System.Drawing.Point(62, 8);
             this.btnHome.Name = "btnHome";
