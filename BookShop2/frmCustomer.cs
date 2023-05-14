@@ -32,35 +32,8 @@ namespace BookShop2
         private void frmCustomer_Load(object sender, EventArgs e)
         {
             MyGlobals.frmCustomer = false;
-            int no;
 
-            for (int i = 0; i < 26; i++)
-            {
-                btns[i] = (Button)pnlButtons.Controls[i];
-                btns[i].Text = "" + (char)(65 + i);
-                btns[i].Enabled = false;
-                btns[i].Click += new EventHandler(button1_Click);
-            }
-
-            connStr = @"Data Source = .\sqlexpress; Initial Catalog = BookShop; Integrated Security = true";
-
-            //get surnames for alphabet buttons
-            sqlNames = @"Select surname from customer order by surname";
-            daNames = new SqlDataAdapter(sqlNames, connStr);
-            daNames.Fill(dsBookShop, "Names");
-
-            //enable relevant alpha buttons
-            foreach (DataRow dr in dsBookShop.Tables["Names"].Rows)
-            {
-                if (!Convert.IsDBNull(dr["Surname"]))
-                {
-                    no = dr["Surname"].ToString()[0] - 65;
-                    btns[no].Enabled = true;
-                    btns[no].BackColor = Color.FromArgb(45, 80, 150);
-                    btns[no].FlatAppearance.BorderColor = Color.FromArgb(45, 80, 150);
-                    btns[no].ForeColor = Color.White;
-                }
-            }
+            load_alphabetPanel();
 
             //set up dataAdapter for customer details for the listbox
             sqlCustomerDetails = @"Select CustNo, custTitle, forename, surname, surname + ', ' + Forename + ', (' + CONVERT(VARCHAR(10), CustNo) + ')' as name, custStreet, custTown, custCounty, custPostcode, custTel, custEmail, Marketing from customer where surname LIKE @Letter order by surname, forename ";
@@ -70,8 +43,6 @@ namespace BookShop2
             daCustomers = new SqlDataAdapter(cmdCustomerDetails);
             daCustomers.FillSchema(dsBookShop, SchemaType.Source, "Customer");
 
-
-
             //set up dataAdapter for customer details for the pnlCustDetails
             sqlCustomer = @"select * from Customer order by CustNo ASC";
             daCustomer = new SqlDataAdapter(sqlCustomer, connStr);
@@ -79,6 +50,10 @@ namespace BookShop2
             daCustomer.FillSchema(dsBookShop, SchemaType.Source, "Customers");
             daCustomer.Fill(dsBookShop, "Customers");
 
+            lblCustNo.Text = "(none selected)";
+            btnClearCust.Visible = false;
+            btnEditCust.Visible = false;
+            btnDeleteCust.Visible = false;
 
             //Loads customer details if one is already stored in MyGlobals.  None selected is displayed if record shows zero or is null .
             if (MyGlobals.customer != null)
@@ -140,6 +115,39 @@ namespace BookShop2
             txtEmail.Enabled = false;
             cmbMarketing.Enabled = false;
         }
+        private void load_alphabetPanel()
+        {
+            int no;
+            for (int i = 0; i < 26; i++)
+            {
+                btns[i] = (Button)pnlButtons.Controls[i];
+                btns[i].Text = "" + (char)(65 + i);
+                btns[i].Enabled = false;
+                btns[i].BackColor = Color.FromKnownColor(KnownColor.Control);
+                btns[i].FlatAppearance.BorderColor = Color.FromKnownColor(KnownColor.Control);
+                btns[i].Click += new EventHandler(button1_Click);
+            }
+
+            connStr = @"Data Source = .\sqlexpress; Initial Catalog = BookShop; Integrated Security = true";
+
+            //get surnames for alphabet buttons
+            sqlNames = @"Select surname from customer order by surname";
+            daNames = new SqlDataAdapter(sqlNames, connStr);
+            daNames.Fill(dsBookShop, "Names");
+
+            //enable relevant alpha buttons
+            foreach (DataRow dr in dsBookShop.Tables["Names"].Rows)
+            {
+                if (!Convert.IsDBNull(dr["Surname"]))
+                {
+                    no = dr["Surname"].ToString()[0] - 65;
+                    btns[no].Enabled = true;
+                    btns[no].BackColor = Color.FromArgb(45, 80, 150);
+                    btns[no].FlatAppearance.BorderColor = Color.FromArgb(45, 80, 150);
+                    btns[no].ForeColor = Color.White;
+                }
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)  //alphabet buttons
         {
@@ -148,7 +156,7 @@ namespace BookShop2
             String str = b.Text;
             // empty dataset table customer
             dsBookShop.Tables["Customer"].Clear();
-
+            dsBookShop.Tables["Names"].Clear();
             fillListboxCustomers(str);
 
             ClearCustomer();
@@ -180,18 +188,6 @@ namespace BookShop2
             Close();
         }
 
-        private void btnReceiptCust_Click(object sender, EventArgs e)
-        {
-            MyGlobals.frmRefunds = true;
-            Close();
-        }
-
-        private void btnRefunds_Click(object sender, EventArgs e)
-        {
-            MyGlobals.frmRefunds = true;
-            Close();
-        }
-
         private void btnClearCust_Click(object sender, EventArgs e)
         {
             ClearCustomer();
@@ -199,58 +195,77 @@ namespace BookShop2
 
         private void lstCustomer_Click(object sender, EventArgs e)  //Click on customer to load full details into pnlCustDetails
         {
-            MyCustomer myCustomer = new MyCustomer();
+            if (lstCustomer.Items.Count > 0)
+            {
+                cmbTitle.Enabled = false;
+                txtSurname.Enabled = false;
+                txtForename.Enabled = false;
+                txtStreet.Enabled = false;
+                txtTown.Enabled = false;
+                txtCounty.Enabled = false;
+                txtPostcode.Enabled = false;
+                txtTelNo.Enabled = false;
+                txtEmail.Enabled = false;
+                cmbMarketing.Enabled = false;
 
-            drCustomer = dsBookShop.Tables["Customer"].Rows.Find(lstCustomer.SelectedValue);
+                MyCustomer myCustomer = new MyCustomer();
 
-            lblCustNo.Text = drCustomer["CustNo"].ToString();
+                drCustomer = dsBookShop.Tables["Customer"].Rows.Find(lstCustomer.SelectedValue);
 
-            drCustomer = dsBookShop.Tables["Customer"].Rows.Find(lblCustNo.Text);
-            if (drCustomer["CustTitle"].ToString() == "Mr")
-                cmbTitle.SelectedIndex = 0;
-            if (drCustomer["CustTitle"].ToString() == "Mrs")
-                cmbTitle.SelectedIndex = 1;
-            if (drCustomer["CustTitle"].ToString() == "Miss")
-                cmbTitle.SelectedIndex = 2;
-            if (drCustomer["CustTitle"].ToString() == "Ms")
-                cmbTitle.SelectedIndex = 3;
+                if (lstCustomer.SelectedValue != null)
+                {
+                    lblCustNo.Text = drCustomer["CustNo"].ToString();
 
-
-            txtForename.Text = drCustomer["Forename"].ToString();
-            txtSurname.Text = drCustomer["Surname"].ToString();
-            txtStreet.Text = drCustomer["CustStreet"].ToString();
-            txtTown.Text = drCustomer["CustTown"].ToString();
-            txtCounty.Text = drCustomer["CustCounty"].ToString();
-            txtPostcode.Text = drCustomer["CustPostcode"].ToString();
-            txtTelNo.Text = drCustomer["CustTel"].ToString();
-            txtEmail.Text = drCustomer["CustEmail"].ToString();
-
-            cmbMarketing.Enabled = true;
-            if (Convert.ToBoolean(drCustomer["Marketing"].ToString()))
-                cmbMarketing.SelectedIndex = 1;
-            else
-                cmbMarketing.SelectedIndex = 0;
-            cmbMarketing.Enabled = false;
-
-            myCustomer.IdNo = Convert.ToInt16(drCustomer["CustNo"].ToString());
-            myCustomer.Title = drCustomer["CustTitle"].ToString();
-            myCustomer.Forename = drCustomer["Forename"].ToString();
-            myCustomer.Surname = drCustomer["Surname"].ToString();
-            myCustomer.Street = drCustomer["CustStreet"].ToString();
-            myCustomer.Town = drCustomer["CustTown"].ToString();
-            myCustomer.County = drCustomer["CustCounty"].ToString();
-            myCustomer.Postcode = drCustomer["CustPostcode"].ToString();
-            myCustomer.TelNo = drCustomer["CustTel"].ToString();
-            myCustomer.Email = drCustomer["CustEmail"].ToString();
-            myCustomer.Marketing = Convert.ToBoolean(drCustomer["Marketing"].ToString());
-
-            MyGlobals.customer = myCustomer;
+                    drCustomer = dsBookShop.Tables["Customer"].Rows.Find(lblCustNo.Text);
+                    if (drCustomer["CustTitle"].ToString() == "Mr")
+                        cmbTitle.SelectedIndex = 0;
+                    if (drCustomer["CustTitle"].ToString() == "Mrs")
+                        cmbTitle.SelectedIndex = 1;
+                    if (drCustomer["CustTitle"].ToString() == "Miss")
+                        cmbTitle.SelectedIndex = 2;
+                    if (drCustomer["CustTitle"].ToString() == "Ms")
+                        cmbTitle.SelectedIndex = 3;
 
 
-            btnSaveCust.Visible = false;
-            btnClearCust.Visible = true;
-            btnEditCust.Visible = true;
-            btnDeleteCust.Visible = true;
+                    txtForename.Text = drCustomer["Forename"].ToString();
+                    txtSurname.Text = drCustomer["Surname"].ToString();
+                    txtStreet.Text = drCustomer["CustStreet"].ToString();
+                    txtTown.Text = drCustomer["CustTown"].ToString();
+                    txtCounty.Text = drCustomer["CustCounty"].ToString();
+                    txtPostcode.Text = drCustomer["CustPostcode"].ToString();
+                    txtTelNo.Text = drCustomer["CustTel"].ToString();
+                    txtEmail.Text = drCustomer["CustEmail"].ToString();
+
+                    cmbMarketing.Enabled = true;
+                    if (Convert.ToBoolean(drCustomer["Marketing"].ToString()))
+                        cmbMarketing.SelectedIndex = 1;
+                    else
+                        cmbMarketing.SelectedIndex = 0;
+                    cmbMarketing.Enabled = false;
+
+                    myCustomer.IdNo = Convert.ToInt16(drCustomer["CustNo"].ToString());
+                    myCustomer.Title = drCustomer["CustTitle"].ToString();
+                    myCustomer.Forename = drCustomer["Forename"].ToString();
+                    myCustomer.Surname = drCustomer["Surname"].ToString();
+                    myCustomer.Street = drCustomer["CustStreet"].ToString();
+                    myCustomer.Town = drCustomer["CustTown"].ToString();
+                    myCustomer.County = drCustomer["CustCounty"].ToString();
+                    myCustomer.Postcode = drCustomer["CustPostcode"].ToString();
+                    myCustomer.TelNo = drCustomer["CustTel"].ToString();
+                    myCustomer.Email = drCustomer["CustEmail"].ToString();
+                    myCustomer.Marketing = Convert.ToBoolean(drCustomer["Marketing"].ToString());
+
+                    MyGlobals.customer = myCustomer;
+
+
+                    btnSaveCust.Visible = false;
+                    btnClearCust.Visible = true;
+                    btnEditCust.Visible = true;
+                    btnDeleteCust.Visible = true;
+                }
+
+
+            }
         }
 
         private void btnNewCust_Click(object sender, EventArgs e)
@@ -368,10 +383,17 @@ namespace BookShop2
             if (btnSaveCust.Tag == "Add")
             {
                 AddCustomer();
+                pnlButtons.Invalidate();
+                load_alphabetPanel();
+                lstCustomer.DataSource = null;
+                fillListboxCustomers(txtSurname.Text.Trim());
             }
             else            //(btnSaveCust.Tag == "Edit")
             {
                 EditCustomer();
+                pnlButtons.Invalidate();
+                load_alphabetPanel();
+                fillListboxCustomers(txtSurname.Text.Trim());
             }
         }
 
@@ -514,7 +536,7 @@ namespace BookShop2
 
                     btnSaveCust.Visible = false;
                     btnClearCust.Visible = true;
-                    btnEditCust.Visible = true;
+                    btnEditCust.Visible = false;
                     btnDeleteCust.Visible = true;
 
                     cmbTitle.Enabled = false;
@@ -676,7 +698,7 @@ namespace BookShop2
 
                     btnSaveCust.Visible = false;
                     btnClearCust.Visible = true;
-                    btnEditCust.Visible = true;
+                    btnEditCust.Visible = false;
                     btnDeleteCust.Visible = true;
 
                     cmbTitle.Enabled = false;
@@ -731,6 +753,8 @@ namespace BookShop2
             btnClearCust.Visible = false;
             btnEditCust.Visible = false;
             btnDeleteCust.Visible = false;
+
+            errP.Clear();
 
             MyGlobals.customer = null;
 

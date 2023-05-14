@@ -109,6 +109,7 @@ namespace BookShop2
 
             //CHECK STOCK   
             int cartStock = 0;      //FIND WHAT'S ALREADY IN THE CART (= cartStock)
+            int comboAmount = 0;
             for (int i = 0; i < MyGlobals.orderDetails.Count; i++)
             {
                 if (MyGlobals.orderDetails[i].ISBN == iSBN)
@@ -117,30 +118,39 @@ namespace BookShop2
                 }
             }
             if (Convert.ToInt16(drBook["Stock"].ToString()) - cartStock > 0)
-            {
+            {              
                 cmbBookQuantity.Enabled = true;
                 cmbBookQuantity.Items.Clear();
-                for (int i = 0; i < Convert.ToInt16(drBook["Stock"].ToString()) - cartStock; i++)
+                if (Convert.ToInt16(drBook["Stock"].ToString()) > 8)
+                    comboAmount = 9 - cartStock;
+                else
+                    comboAmount = Convert.ToInt16(drBook["Stock"].ToString()) - cartStock;
+            }
+            if (comboAmount > 0)
+            {
+                for (int i = 0; i < comboAmount; i++)
                 {
                     this.cmbBookQuantity.Items.Add(i + 1);
-                    if (i == 8) break;
                 }
-                if (Convert.ToInt16(drBook["Stock"].ToString()) < 6)
+                if (Convert.ToInt16(drBook["Stock"].ToString()) < 6)    //Low Stock warning
                     lblLowStock.Visible = true;
-
-
             }
             else
             {
-                cmbBookQuantity.Items.Clear();
-                this.cmbBookQuantity.Items.Add("Out of stock");
                 cmbBookQuantity.Enabled = false;
+                btnAddBook.Enabled = false;
+                btnAddBook.BackColor = Color.FromKnownColor(KnownColor.ControlLight);
+                btnAddBook.FlatAppearance.BorderColor = Color.FromKnownColor(KnownColor.ControlLight);
                 lblLowStock.Visible = false;
-
+                cmbBookQuantity.Items.Clear();
+                if(Convert.ToInt16(drBook["Stock"].ToString()) < 1)
+                this.cmbBookQuantity.Items.Add("Out of stock");
+                if (comboAmount < 1)
+                    this.cmbBookQuantity.Items.Add("Limit Reached");
             }
 
             cmbBookQuantity.SelectedIndex = 0;
-            if (Convert.ToInt16(drBook["Stock"].ToString()) > 0)
+            if (Convert.ToInt16(drBook["Stock"].ToString())> 0 && comboAmount>0)
             {
                 btnAddBook.Enabled = true;
                 btnAddBook.BackColor = Color.FromArgb(45, 80, 150);
@@ -178,21 +188,30 @@ namespace BookShop2
             myOrderDetail.Stock = stock;
 
             //Check if this is a duplicate order and update quantity to existing order if true or add another myOrderDetail to list.
-            bool duplicate = false;
+            bool duplicate = false, limit = false;
+
             for (int i = 0; i < MyGlobals.orderDetails.Count; i++)
             {
                 if (MyGlobals.orderDetails[i].ISBN == iSBN)
                 {
                     duplicate = true;
-                    MyGlobals.orderDetails[i].Quantity = MyGlobals.orderDetails[i].Quantity + myOrderDetail.Quantity;
-                    break;
+                    if (MyGlobals.orderDetails[i].Quantity + myOrderDetail.Quantity < 10)
+                    {
+                        MyGlobals.orderDetails[i].Quantity = MyGlobals.orderDetails[i].Quantity + myOrderDetail.Quantity;   //Restrict to 9 books max
+                    }
+                    else
+                    {
+                        MyGlobals.orderDetails[i].Quantity = 9;
+                        limit = true;                               //limit has been reached 
+                        break;
+                    }
                 }
             }
             if (duplicate == false)
             {
                 MyGlobals.orderDetails.Add(myOrderDetail);
             }
-
+            if(limit==false)
             MyGlobals.cart += myOrderDetail.Quantity;
             lblBookOrderMessage.Visible = true;
 

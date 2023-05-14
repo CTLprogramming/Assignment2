@@ -34,7 +34,6 @@
             this.btnNewCust = new System.Windows.Forms.Button();
             this.btnDeleteCust = new System.Windows.Forms.Button();
             this.btnCheckoutCust = new System.Windows.Forms.Button();
-            this.btnReceiptCust = new System.Windows.Forms.Button();
             this.btnClearCust = new System.Windows.Forms.Button();
             this.pnlButtons = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
@@ -90,7 +89,6 @@
             this.lstCustomer = new System.Windows.Forms.ListBox();
             this.errP = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnShopCust = new System.Windows.Forms.Button();
-            this.btnRefunds = new System.Windows.Forms.Button();
             this.pnlButtons.SuspendLayout();
             this.pnlCustDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errP)).BeginInit();
@@ -105,7 +103,7 @@
             this.btnSaveCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnSaveCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnSaveCust.Location = new System.Drawing.Point(1299, 684);
+            this.btnSaveCust.Location = new System.Drawing.Point(1381, 684);
             this.btnSaveCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnSaveCust.Name = "btnSaveCust";
             this.btnSaveCust.Size = new System.Drawing.Size(154, 39);
@@ -123,7 +121,7 @@
             this.btnEditCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnEditCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnEditCust.Location = new System.Drawing.Point(1126, 684);
+            this.btnEditCust.Location = new System.Drawing.Point(1208, 684);
             this.btnEditCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnEditCust.Name = "btnEditCust";
             this.btnEditCust.Size = new System.Drawing.Size(154, 39);
@@ -141,7 +139,7 @@
             this.btnNewCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnNewCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNewCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnNewCust.Location = new System.Drawing.Point(953, 684);
+            this.btnNewCust.Location = new System.Drawing.Point(1035, 684);
             this.btnNewCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnNewCust.Name = "btnNewCust";
             this.btnNewCust.Size = new System.Drawing.Size(154, 39);
@@ -159,7 +157,7 @@
             this.btnDeleteCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnDeleteCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnDeleteCust.Location = new System.Drawing.Point(1636, 684);
+            this.btnDeleteCust.Location = new System.Drawing.Point(1551, 782);
             this.btnDeleteCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnDeleteCust.Name = "btnDeleteCust";
             this.btnDeleteCust.Size = new System.Drawing.Size(154, 39);
@@ -177,7 +175,7 @@
             this.btnCheckoutCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnCheckoutCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCheckoutCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnCheckoutCust.Location = new System.Drawing.Point(1299, 782);
+            this.btnCheckoutCust.Location = new System.Drawing.Point(1381, 782);
             this.btnCheckoutCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnCheckoutCust.Name = "btnCheckoutCust";
             this.btnCheckoutCust.Size = new System.Drawing.Size(154, 39);
@@ -185,24 +183,6 @@
             this.btnCheckoutCust.Text = "Checkout";
             this.btnCheckoutCust.UseVisualStyleBackColor = false;
             this.btnCheckoutCust.Click += new System.EventHandler(this.btnCheckoutCust_Click);
-            // 
-            // btnReceiptCust
-            // 
-            this.btnReceiptCust.AutoSize = true;
-            this.btnReceiptCust.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.btnReceiptCust.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlLight;
-            this.btnReceiptCust.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.btnReceiptCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnReceiptCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReceiptCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnReceiptCust.Location = new System.Drawing.Point(1469, 782);
-            this.btnReceiptCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.btnReceiptCust.Name = "btnReceiptCust";
-            this.btnReceiptCust.Size = new System.Drawing.Size(154, 39);
-            this.btnReceiptCust.TabIndex = 84;
-            this.btnReceiptCust.Text = "Receipts";
-            this.btnReceiptCust.UseVisualStyleBackColor = false;
-            this.btnReceiptCust.Click += new System.EventHandler(this.btnRefunds_Click);
             // 
             // btnClearCust
             // 
@@ -213,7 +193,7 @@
             this.btnClearCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnClearCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClearCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnClearCust.Location = new System.Drawing.Point(1469, 684);
+            this.btnClearCust.Location = new System.Drawing.Point(1551, 684);
             this.btnClearCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnClearCust.Name = "btnClearCust";
             this.btnClearCust.Size = new System.Drawing.Size(154, 39);
@@ -784,6 +764,7 @@
             // 
             // cmbMarketing
             // 
+            this.cmbMarketing.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMarketing.Enabled = false;
             this.cmbMarketing.FormattingEnabled = true;
             this.cmbMarketing.Items.AddRange(new object[] {
@@ -804,6 +785,7 @@
             // 
             // cmbTitle
             // 
+            this.cmbTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTitle.Enabled = false;
             this.cmbTitle.FormattingEnabled = true;
             this.cmbTitle.Items.AddRange(new object[] {
@@ -1039,7 +1021,7 @@
             this.btnShopCust.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnShopCust.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShopCust.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnShopCust.Location = new System.Drawing.Point(1126, 782);
+            this.btnShopCust.Location = new System.Drawing.Point(1208, 782);
             this.btnShopCust.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnShopCust.Name = "btnShopCust";
             this.btnShopCust.Size = new System.Drawing.Size(154, 39);
@@ -1048,30 +1030,11 @@
             this.btnShopCust.UseVisualStyleBackColor = false;
             this.btnShopCust.Click += new System.EventHandler(this.btnShopCust_Click);
             // 
-            // btnRefunds
-            // 
-            this.btnRefunds.AutoSize = true;
-            this.btnRefunds.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.btnRefunds.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlLight;
-            this.btnRefunds.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.btnRefunds.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnRefunds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefunds.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnRefunds.Location = new System.Drawing.Point(1636, 782);
-            this.btnRefunds.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.btnRefunds.Name = "btnRefunds";
-            this.btnRefunds.Size = new System.Drawing.Size(154, 39);
-            this.btnRefunds.TabIndex = 90;
-            this.btnRefunds.Text = "Refunds";
-            this.btnRefunds.UseVisualStyleBackColor = false;
-            this.btnRefunds.Click += new System.EventHandler(this.btnRefunds_Click);
-            // 
             // frmCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1881, 878);
-            this.Controls.Add(this.btnRefunds);
             this.Controls.Add(this.btnShopCust);
             this.Controls.Add(this.lstCustomer);
             this.Controls.Add(this.label1);
@@ -1081,7 +1044,6 @@
             this.Controls.Add(this.btnNewCust);
             this.Controls.Add(this.btnDeleteCust);
             this.Controls.Add(this.btnCheckoutCust);
-            this.Controls.Add(this.btnReceiptCust);
             this.Controls.Add(this.btnClearCust);
             this.Controls.Add(this.pnlButtons);
             this.Name = "frmCustomer";
@@ -1103,7 +1065,6 @@
         private System.Windows.Forms.Button btnNewCust;
         private System.Windows.Forms.Button btnDeleteCust;
         private System.Windows.Forms.Button btnCheckoutCust;
-        private System.Windows.Forms.Button btnReceiptCust;
         private System.Windows.Forms.Button btnClearCust;
         private System.Windows.Forms.Panel pnlButtons;
         private System.Windows.Forms.Panel pnlCustDetails;
@@ -1159,6 +1120,5 @@
         private System.Windows.Forms.ComboBox cmbMarketing;
         private System.Windows.Forms.ErrorProvider errP;
         private System.Windows.Forms.Button btnShopCust;
-        private System.Windows.Forms.Button btnRefunds;
     }
 }

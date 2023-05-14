@@ -14,13 +14,13 @@ namespace BookShop2
 {
     public partial class frmMain : Form
     {
-        public static frmMain instance; //Allows form to be controlled from other forms (frmShop and frmCheckout)
+        public static frmMain instance; //Allows form to be controlled from other forms (frmShop, frmCheckout and frmEdit)
         public frmMain()
         {
             InitializeComponent();
             instance = this;
-            _ = lblCartQuant;   //Allows cart label to be updated from frmShop and frmCheckout
-            
+            _ = lblCartQuant;   //Allows cart label to be updated from frmShop, frmCheckout and frmEdit
+
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -98,13 +98,20 @@ namespace BookShop2
             {
                 btnCheckout_Click(sender, e);
             }
-            if (MyGlobals.frmReceipt)
-            {
-                btnRefunds_Click(sender, e);
-            }
             if (MyGlobals.frmRefunds)
             {
                 btnRefunds_Click(sender, e);   
+            }
+            if (MyGlobals.frmEdit)
+            {
+                lblPageTitle.Text = "Edits";
+                btnHome.Visible = true;
+                frmEdit frmAdjustment = new frmEdit();
+                frmAdjustment.TopLevel = false;
+                frmAdjustment.FormBorderStyle = FormBorderStyle.None;
+                frmAdjustment.WindowState = FormWindowState.Maximized;
+                pnlMain.Controls.Add(frmAdjustment);
+                frmAdjustment.Show();
             }
         }
     }

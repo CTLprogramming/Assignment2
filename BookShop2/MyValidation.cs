@@ -100,6 +100,28 @@ namespace BookShop2
             return ok;
         }
 
+        public static bool validLetterNumberHyphenApostropheWhitespace(string txt)  //allows alphanumeric, hyphen, apostrophe and whitespace
+        {
+            bool ok = true;
+
+            if (txt.Trim().Length == 0)
+            {
+                ok = false;
+            }
+            else
+            {
+                for (int x = 0; x < txt.Length; x++)
+                {
+                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && !(char.IsNumber(txt[x])) && !(txt[x].Equals('-'))
+                        && !(txt[x].Equals('\'')))
+                        ok = false;
+                }
+            }
+            return ok;
+        }
+
+
+
         public static bool validForename(string txt)  //allows alphabetic, dash and whitespace
         {
             bool ok = true;
@@ -139,27 +161,6 @@ namespace BookShop2
             return ok;
         }
 
-        public static bool validDogDOB(string txt)  //Check dog is old enough: >56 days
-        {
-            DateTime currentDate = DateTime.Now;
-            DateTime dogDOB = Convert.ToDateTime(txt);
-
-            TimeSpan t = currentDate - dogDOB;  //Timespan gives days, hours, seconds, fractions of seconds
-            double NoOfDays = t.TotalDays;  //converts to days
-
-            bool ok = true;
-
-            if (txt.Trim().Length == 0)
-            {
-                ok = false;
-            }
-            else
-            {
-                if (NoOfDays <= 56)
-                    ok = false;
-            }
-            return ok;
-        }
         public static String firstLetterEachWordToUpper(String word)//npt working
         {
             Char[] array = word.ToCharArray();
@@ -171,7 +172,7 @@ namespace BookShop2
             //go through array and check for spaces. Make any lowercase letters after a space uppercase
             for (int x = 1; x < array.Length; x++)
             {
-                if (array[x - 1] == ' ')
+                if (array[x - 1] == ' '|| array[x - 1] == '\'')
                 {
                     if (Char.IsLower(array[x]))
                     {

@@ -63,9 +63,9 @@ namespace BookShop2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap ACB_logo2_png {
+        public static System.Drawing.Bitmap ACB_logo2 {
             get {
-                object obj = ResourceManager.GetObject("ACB_logo2.png", resourceCulture);
+                object obj = ResourceManager.GetObject("ACB_logo2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace BookShop2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap ACB_logo3_png {
+        public static System.Drawing.Bitmap ACB_logo3 {
             get {
-                object obj = ResourceManager.GetObject("ACB_logo3.png", resourceCulture);
+                object obj = ResourceManager.GetObject("ACB_logo3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace BookShop2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap btnLogo_png {
+        public static System.Drawing.Bitmap btnLogo {
             get {
-                object obj = ResourceManager.GetObject("btnLogo.png", resourceCulture);
+                object obj = ResourceManager.GetObject("btnLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

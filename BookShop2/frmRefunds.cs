@@ -24,6 +24,7 @@ namespace BookShop2
         SqlConnection conn; // Equivalent to network connection to server
         String connStr, sqlNames, sqlOrder, sqlOrderDetails, sqlOrderDetail, sqlCustomerDetails, sqlBook;
 
+
         List<MyOrderDetail> orderDetails = new List<MyOrderDetail>();  //List to store rows
         MyCustomer myCustomer = new MyCustomer();
         int custOrderNo = 0;
@@ -165,41 +166,27 @@ namespace BookShop2
             if (lstOrders.Items.Count == 0)
             {
                 btnIgnoreDelete.Visible = false;
+                btnIgnoreDelete.BackColor = Color.Silver;
+                btnEdit.Visible = false;
                 btnIgnoreDelete.Text = "Ignore";
                 lblSelectQuantity.Visible = false;
 
             }
         }
 
-        private void lstCustomer_Click(object sender, EventArgs e)
-        {
-
-            DataRow drCustomer = dsBookShop.Tables["Customer"].Rows.Find(lstCustomer.SelectedValue);
-            lblCustomer.Text = drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString() + " (" + lstCustomer.SelectedValue.ToString() + ")";
-            custNo = Convert.ToInt32(drCustomer["CustNo"].ToString());
-            orderDetails.Clear();
-            flpOrderDetails.Controls.Clear();
-
-            myCustomer.IdNo = Convert.ToInt16(drCustomer["CustNo"].ToString());
-            myCustomer.Title = drCustomer["CustTitle"].ToString();
-            myCustomer.Forename = drCustomer["Forename"].ToString();
-            myCustomer.Surname = drCustomer["Surname"].ToString();
-            myCustomer.Street = drCustomer["CustStreet"].ToString();
-            myCustomer.Town = drCustomer["CustTown"].ToString();
-            myCustomer.County = drCustomer["CustCounty"].ToString();
-            myCustomer.Postcode = drCustomer["CustPostcode"].ToString();
-            myCustomer.TelNo = drCustomer["CustTel"].ToString();
-            myCustomer.Email = drCustomer["CustEmail"].ToString();
-            myCustomer.Marketing = Convert.ToBoolean(drCustomer["Marketing"].ToString());
-        }
-
-
         private void lstOrders_SelectedIndexChanged(object sender, EventArgs e)
         {
+            btnIgnoreDelete.Visible = false;
+            btnIgnoreDelete.BackColor = Color.Silver;
+            btnEdit.Visible = false;
+            btnIgnoreDelete.Text = "Ignore";
+            lblSelectQuantity.Visible = false;
+
             lblRefundTotal.Text = "";
             flpOrderDetails.Controls.Clear();
             btnPrintLabel.Visible = false;
             btnPrintReceipt.Visible = false;
+            btnConfirmRefund.Visible = false;
             if (lstOrders.SelectedItem != null)
             {
                 btnPrintLabel.Visible = true;
@@ -208,65 +195,8 @@ namespace BookShop2
                 DataRowView drv = lstOrders.SelectedItem as DataRowView;
                 if (drv != null)
                 {
-                    int orderNo = Convert.ToInt32(drv["CustOrderNo"]);
-
-                    SqlDataAdapter daOrderDetails = new SqlDataAdapter(@"Select C.CustOrderNo, C.ISBN, Quantity, BookTitle, AuthorForename, AuthorSurname, Price FROM CustOrderDetails C JOIN Book B on C.ISBN = B.ISBN WHERE CustOrderNo = @RefundDetails", connStr);
-                    daOrderDetails.SelectCommand.Parameters.AddWithValue("@RefundDetails", orderNo);
-                    DataTable dtOrderDetails = new DataTable();
-                    daOrderDetails.Fill(dtOrderDetails);
-
-                    orderDetails.Clear();  //List of myOrders.
-                    for (int i = 0; i < dtOrderDetails.Rows.Count; i++)
-                    {
-                        MyOrderDetail myOrderDetail = new MyOrderDetail(); //Object to store each row
-
-                        DataRow dr = dtOrderDetails.Rows[i];
-                        myOrderDetail.ISBN = Convert.ToInt64(dr["ISBN"]);
-                        myOrderDetail.Title = dr["BookTitle"].ToString();
-                        myOrderDetail.AuthorForename = dr["AuthorForename"].ToString();
-                        myOrderDetail.AuthorSurname = dr["AuthorSurname"].ToString();
-
-                        myOrderDetail.Price = Convert.ToDecimal(dr["Price"]);
-                        myOrderDetail.Quantity = Convert.ToInt32(dr["Quantity"]);
-                        myOrderDetail.Stock = 0;        //Stores the number of books to be refunded and restocked
-
-                        orderDetails.Add(myOrderDetail);
-                    }
-                    for (int i = 0; i < dtOrderDetails.Rows.Count; i++)
-                    {
-                        System.Windows.Forms.Label label0 = new System.Windows.Forms.Label();
-                        label0.Size = new Size(300, 75);
-                        label0.Font = new Font("Serif", 12);
-                        label0.Tag = i;
-
-                        System.Windows.Forms.Label label1 = new System.Windows.Forms.Label();
-                        label1.TextAlign = ContentAlignment.MiddleRight;
-                        label1.Font = new Font("Serif", 12);
-                        label1.Tag = i + "a";
-
-                        System.Windows.Forms.ComboBox combo = new System.Windows.Forms.ComboBox();
-                        combo.Size = new Size(50, 20);
-                        combo.Font = new Font("Serif", 12);
-                        combo.Tag = i;
-                        combo.SelectedIndexChanged += combo_SelectedIndexChanged;
-
-                        flpOrderDetails.Controls.Add(label0);
-                        flpOrderDetails.Controls.Add(label1);
-                        flpOrderDetails.Controls.Add(combo);
-
-                        label0.Text = orderDetails[i].Title + "\n" + orderDetails[i].AuthorForename + " " + orderDetails[i].AuthorSurname;
-                        label1.Text = String.Format("{0:0.00}", orderDetails[i].Price);
-
-                        combo.Items.Clear();
-                        for (int j = 0; j <= orderDetails[i].Quantity; j++)
-                        {
-                            combo.Items.Add(j);
-                        }
-                        if (orderDetails[i].Quantity > 0)
-                            combo.SelectedIndex = orderDetails[i].Stock - 1;
-
-                    }
-
+                     custOrderNo = Convert.ToInt32(drv["CustOrderNo"]);
+                    fillFlpOrderDetails(custOrderNo);
                 }
             }
             if (lstOrders.Items.Count != 0)
@@ -274,8 +204,66 @@ namespace BookShop2
                 btnIgnoreDelete.Visible = true;
                 lblSelectQuantity.Visible = true;
             }
+        }
 
+        private void fillFlpOrderDetails(int orderNo)
+        {
+            SqlDataAdapter daOrderDetails = new SqlDataAdapter(@"Select C.CustOrderNo, C.ISBN, Quantity, BookTitle, AuthorForename, AuthorSurname, Price FROM CustOrderDetails C JOIN Book B on C.ISBN = B.ISBN WHERE CustOrderNo = @RefundDetails", connStr);
+            daOrderDetails.SelectCommand.Parameters.AddWithValue("@RefundDetails", orderNo);
+            DataTable dtOrderDetails = new DataTable();
+            daOrderDetails.Fill(dtOrderDetails);
 
+            orderDetails.Clear();  //List of myOrders.
+            for (int i = 0; i < dtOrderDetails.Rows.Count; i++)
+            {
+                MyOrderDetail myOrderDetail = new MyOrderDetail(); //Object to store each row
+
+                DataRow dr = dtOrderDetails.Rows[i];
+                myOrderDetail.ISBN = Convert.ToInt64(dr["ISBN"]);
+                myOrderDetail.Title = dr["BookTitle"].ToString();
+                myOrderDetail.AuthorForename = dr["AuthorForename"].ToString();
+                myOrderDetail.AuthorSurname = dr["AuthorSurname"].ToString();
+
+                myOrderDetail.Price = Convert.ToDecimal(dr["Price"]);
+                myOrderDetail.Quantity = Convert.ToInt32(dr["Quantity"]);
+                myOrderDetail.Stock = 0;        //Stores the number of books to be refunded and restocked
+
+                orderDetails.Add(myOrderDetail);
+            }
+            for (int i = 0; i < dtOrderDetails.Rows.Count; i++)
+            {
+                System.Windows.Forms.Label label0 = new System.Windows.Forms.Label();
+                label0.Size = new Size(300, 75);
+                label0.Font = new Font("Serif", 12);
+                label0.Tag = i;
+
+                System.Windows.Forms.Label label1 = new System.Windows.Forms.Label();
+                label1.TextAlign = ContentAlignment.MiddleRight;
+                label1.Font = new Font("Serif", 12);
+                label1.Tag = i + "a";
+
+                System.Windows.Forms.ComboBox combo = new System.Windows.Forms.ComboBox();
+                combo.Size = new Size(50, 20);
+                combo.Font = new Font("Serif", 12);
+                combo.Tag = i;
+                combo.SelectedIndexChanged += combo_SelectedIndexChanged;
+                combo.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                flpOrderDetails.Controls.Add(label0);
+                flpOrderDetails.Controls.Add(label1);
+                flpOrderDetails.Controls.Add(combo);
+
+                label0.Text = orderDetails[i].Title + "\n" + orderDetails[i].AuthorForename + " " + orderDetails[i].AuthorSurname;
+                label1.Text = String.Format("{0:0.00}", orderDetails[i].Price);
+
+                combo.Items.Clear();
+                for (int j = 0; j <= orderDetails[i].Quantity; j++)
+                {
+                    combo.Items.Add(j);
+                }
+                if (orderDetails[i].Quantity > 0)
+                    combo.SelectedIndex = orderDetails[i].Stock - 1;
+            }
         }
 
         private void combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -340,13 +328,13 @@ namespace BookShop2
                 Name = "pictureBox",
                 Size = new Size(64, 40),
                 Location = new Point(0, 0),
-                Image = Image.FromFile("ACB_logo3.png"),
+                Image = Image.FromFile("btnLogo.png"),
 
             };
-            e.Graphics.DrawImage(picture.Image, new Point(380, 10));
+            e.Graphics.DrawImage(picture.Image, new Point(585, 50));
             e.Graphics.DrawString("RECEIPT", new Font("Arial", 24, FontStyle.Bold), Brushes.Black, new Point(100, 100));
-            e.Graphics.DrawString("" + myCustomer.Title + " " + myCustomer.Forename + " " + myCustomer.Surname, new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(100, 270));
-            e.Graphics.DrawString("" + DateTime.Now.ToString("dddd, dd MMMM yyyy"), new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(550, 270));
+            e.Graphics.DrawString("" + myCustomer.Title + " " + myCustomer.Forename + " " + myCustomer.Surname, new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(100, 240));
+            e.Graphics.DrawString("" + DateTime.Now.ToString("dddd, dd MMMM yyyy"), new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(560, 240));
 
 
             decimal total = 0;
@@ -387,7 +375,7 @@ namespace BookShop2
 
             try
             {
-                drOrder = dsBookShop.Tables["CustOrder"].NewRow();
+                drOrder = dsBookShop.Tables["CustOrder"].NewRow();          //Create new  Refund order in Database (Refund = true)
 
                 drOrder["CustOrderNo"] = custOrderNo;
                 drOrder["CustNo"] = custNo;
@@ -405,7 +393,7 @@ namespace BookShop2
                 MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
             }
 
-            for (int i = 0; i < orderDetails.Count; i++)
+            for (int i = 0; i < orderDetails.Count; i++)                    //Record orderDetails for each book in database
             {
                 try
                 {
@@ -427,10 +415,8 @@ namespace BookShop2
                     MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
                 }
             }
-            for (int i = 0; i < orderDetails.Count; i++)
+            for (int i = 0; i < orderDetails.Count; i++)                        //Return stock to database book table
             {
-                drBook = dsBookShop.Tables["Book"].Rows.Find(orderDetails[i].ISBN);
-
                 try
                 {
                     drBook = dsBookShop.Tables["Book"].Rows.Find(orderDetails[i].ISBN);
@@ -443,7 +429,8 @@ namespace BookShop2
                     daBook.Update(dsBookShop, "Book");
 
                     if (i == orderDetails.Count - 1)
-                        MessageBox.Show("Return has been processed", "Return");
+                        MessageBox.Show("Refund has been processed for: \n" + myCustomer.Forename + " " + myCustomer.Surname, "Refund No: " + custOrderNo);
+
                 }
                 catch (Exception ex)
                 {
@@ -452,7 +439,7 @@ namespace BookShop2
                 }
 
 
-                MyGlobals.frmShop = true;
+                MyGlobals.frmRefunds = true;
                 Close();
 
             }
@@ -470,84 +457,86 @@ namespace BookShop2
             {
                 btnIgnoreDelete.Text = "Delete";
                 btnIgnoreDelete.BackColor = Color.FromArgb(45, 80, 150);
+                btnEdit.Visible = true;
             }
             else
             {
                 DialogResult dialogResult = MessageBox.Show("Delete entire record of order without refund?", "Delete Order", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    for (int i = 0; i < orderDetails.Count; i++)  //returns ordered stock to Book Table in database.
-                    {
-                        drBook = dsBookShop.Tables["Book"].Rows.Find(orderDetails[i].ISBN);
-
-                        try
-                        {
-                            drBook = dsBookShop.Tables["Book"].Rows.Find(orderDetails[i].ISBN);
-
-                            drBook.BeginEdit();
-
-                            drBook["Stock"] = Convert.ToInt16(drBook["Stock"].ToString()) + orderDetails[i].Quantity;
-
-                            drBook.EndEdit();
-                            daBook.Update(dsBookShop, "Book");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
-                            MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
-                        }
-                    }
-
-                    DataRowView drv = lstOrders.SelectedItem as DataRowView;
-                    int orderNo = Convert.ToInt32(drv["CustOrderNo"]);
-
-                    for (int i = 0; i < dsBookShop.Tables["CustOrderDetails"].Rows.Count; i++)  //Deletes all instances of the order detail in the database
-                    {
-                        try
-                        {
-                            drOrderDetail = dsBookShop.Tables["CustOrderDetails"].Rows[i];
-                            if (int.Parse(drOrderDetail["CustOrderNo"].ToString()) == orderNo)
-                            {
-                                drOrderDetail.Delete();
-                                daOrderDetail.Update(dsBookShop, "CustOrderDetails");
-                            }
-                                                      
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
-                            MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
-                        }
-                    }
-
-                    for (int i = 0; i < dsBookShop.Tables["CustOrder"].Rows.Count; i++)  //Deletes all instances of the order in the database
-                    {
-                        try
-                        {
-                            drOrder = dsBookShop.Tables["CustOrder"].Rows[i];
-                            if (int.Parse(drOrder["CustOrderNo"].ToString()) == orderNo)
-                            {
-                                drOrder.Delete();
-                                daOrder.Update(dsBookShop, "CustOrder");
-                            }
-
-
-                            if (i == dsBookShop.Tables["CustOrder"].Rows.Count - 1)
-                                MessageBox.Show("Stock has been returned, delete has been processed", "Delete");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
-                            MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
-                        }
-                    }
-                    lstOrders.DataSource= null;
+                    deleteOrder();
                 }
                 else
                 {
                     //Don't delete and continue
                 }
             }
+        }
+
+        private void deleteOrder()
+        {
+            for (int i = 0; i < orderDetails.Count; i++)  //returns ordered stock to Book Table in database.
+            {
+                drBook = dsBookShop.Tables["Book"].Rows.Find(orderDetails[i].ISBN);
+
+                try
+                {
+                    drBook = dsBookShop.Tables["Book"].Rows.Find(orderDetails[i].ISBN);
+
+                    drBook.BeginEdit();
+
+                    drBook["Stock"] = Convert.ToInt16(drBook["Stock"].ToString()) + orderDetails[i].Quantity;
+
+                    drBook.EndEdit();
+                    daBook.Update(dsBookShop, "Book");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
+                    MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                }
+            }
+
+            // Get the order number from the selected item in the list
+            DataRowView drv = lstOrders.SelectedItem as DataRowView;
+            int orderNo = Convert.ToInt32(drv["CustOrderNo"]);
+
+            // Find all rows that match the order number and delete them
+            DataRow[] rowsDetailsToDelete = dsBookShop.Tables["CustOrderDetails"].Select("CustOrderNo = " + orderNo);
+            foreach (DataRow rowToDelete in rowsDetailsToDelete)
+            {
+                rowToDelete.Delete();
+            }
+
+            // Update the database with the changes
+            daOrderDetail.Update(dsBookShop, "CustOrderDetails");
+
+
+            // Find all rows that match the order number and delete them
+            DataRow[] rowsToDelete = dsBookShop.Tables["CustOrder"].Select("CustOrderNo = " + orderNo);
+            foreach (DataRow rowToDelete in rowsToDelete)
+            {
+                rowToDelete.Delete();
+            }
+
+            // Update the database with the changes
+            daOrder.Update(dsBookShop, "CustOrder");
+
+            // Display a message after all rows have been deleted and the database has been updated
+            MessageBox.Show("Stock has been returned, delete has been processed", "Delete");
+            lstOrders.DataSource = null;
+
+            MyGlobals.frmCustomer = true;
+            Close();
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            MyGlobals.customer = myCustomer;
+            MyGlobals.selectedOrderNo = custOrderNo;
+            MyGlobals.selectedCustNo = custNo;
+            MyGlobals.frmEdit = true;
+            Close();
         }
     }
 }

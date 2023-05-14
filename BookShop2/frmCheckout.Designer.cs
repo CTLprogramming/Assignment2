@@ -126,6 +126,7 @@
             this.btnConfirmCustomer.TabIndex = 93;
             this.btnConfirmCustomer.Text = "Confirm";
             this.btnConfirmCustomer.UseVisualStyleBackColor = false;
+            this.btnConfirmCustomer.Visible = false;
             this.btnConfirmCustomer.Click += new System.EventHandler(this.btnConfirmCustomer_Click);
             // 
             // btnConfirmOrder

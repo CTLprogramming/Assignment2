@@ -34,7 +34,7 @@ namespace BookShop2
             get { return street; }
             set
             {
-                if (MyValidation.validLength(value, 5, 40) && MyValidation.validLetterNumberWhitespace(value))
+                if (MyValidation.validLength(value, 5, 40) && MyValidation.validLetterNumberHyphenApostropheWhitespace(value))
                 {
                     street = MyValidation.firstLetterEachWordToUpper(value);
                 }
@@ -49,7 +49,7 @@ namespace BookShop2
             get { return town; }
             set
             {
-                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterWhitespace(value))
+                if (MyValidation.validLength(value, 2, 20) && MyValidation.validSurname(value))
                 {
                     town = MyValidation.firstLetterEachWordToUpper(value);
                 }
@@ -63,7 +63,7 @@ namespace BookShop2
             get { return county; }
             set
             {
-                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetter(value))
+                if (MyValidation.validLength(value, 2, 20) && MyValidation.validSurname(value))
                 {
                     county = MyValidation.firstLetterEachWordToUpper(value);
                 }
@@ -97,7 +97,7 @@ namespace BookShop2
                     telNo = value;
                 }
                 else
-                    throw new MyException("Telephone number must be 11-15 digits");
+                    throw new MyException("Telephone number must be 11-15 digits only.  No spaces or other characters please");
             }
         }
     }

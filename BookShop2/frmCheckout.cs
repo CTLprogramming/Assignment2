@@ -33,7 +33,6 @@ namespace BookShop2
                 MyGlobals.frmShop = true;
                 Close();
             }
-
         }
 
         int custOrderNo = 0;
@@ -50,6 +49,13 @@ namespace BookShop2
             connStr = @"Data Source = .\sqlexpress; Initial Catalog = BookShop; Integrated Security = true";
             conn = new SqlConnection(connStr);
 
+            if (MyGlobals.cart == 0)
+            {
+                btnCancelOrder.Enabled = false;
+                btnCancelOrder.BackColor = Color.FromKnownColor(KnownColor.ControlLight);
+                btnCancelOrder.FlatAppearance.BorderColor = Color.FromKnownColor(KnownColor.ControlLight);
+            }
+
             //set up dataAdapter for order
             sqlOrder = @"Select * from CustOrder order by CustOrderNo ASC";
             cmdOrder = new SqlCommand(sqlOrder, conn);
@@ -57,7 +63,6 @@ namespace BookShop2
             cmdBOrder = new SqlCommandBuilder(daOrder);
             daOrder.FillSchema(dsBookShop, SchemaType.Source, "CustOrder");
             daOrder.Fill(dsBookShop, "CustOrder");
-
 
             //set up dataAdapter for orderDetails
             sqlOrderDetails = @"Select * from CustOrderDetails";
@@ -105,6 +110,7 @@ namespace BookShop2
                 combo.Font = new Font("Serif", 12);
                 combo.Tag = i;
                 combo.SelectedIndexChanged += combo_SelectedIndexChanged;
+                combo.DropDownStyle = ComboBoxStyle.DropDownList; 
 
                 flpCart.Controls.Add(label0);
                 flpCart.Controls.Add(label1);
@@ -116,10 +122,10 @@ namespace BookShop2
                 combo.Items.Clear();
                 for (int j = 0; j < MyGlobals.orderDetails[i].Stock; j++)
                 {
-                    combo.Items.Add(j + 1);
-                    if (j == 8) break;
+                    combo.Items.Add(j);
+                    if (j == 9) break;
                 }
-                combo.SelectedIndex = MyGlobals.orderDetails[i].Quantity - 1;
+                combo.SelectedIndex = MyGlobals.orderDetails[i].Quantity;
                 lblTotal.Text = "£  " + CalculateTotal().ToString();
             }
         }
@@ -144,6 +150,22 @@ namespace BookShop2
             {
                 total = total + MyGlobals.orderDetails[i].Price * MyGlobals.orderDetails[i].Quantity;
                 MyGlobals.cart += MyGlobals.orderDetails[i].Quantity;
+            }
+            if (MyGlobals.cart == 0)
+            {
+                btnConfirmOrder.Visible = false;
+                btnConfirmCustomer.Visible  = false;
+                btnCancelOrder.Enabled = false;
+                btnCancelOrder.BackColor = Color.FromKnownColor(KnownColor.ControlLight);
+                btnCancelOrder.FlatAppearance.BorderColor = Color.FromKnownColor(KnownColor.ControlLight);
+            }
+            else
+            {
+                btnCancelOrder.Enabled = true;
+                btnCancelOrder.BackColor = Color.FromArgb(45, 80, 150);
+                btnCancelOrder.FlatAppearance.BorderColor  = Color.FromArgb(45, 80, 150);
+                if(MyGlobals.customer!= null) 
+                btnConfirmCustomer.Visible = true;
             }
             frmMain.instance.lblCartQuant.Text = MyGlobals.cart.ToString();
             return total;
@@ -199,23 +221,27 @@ namespace BookShop2
 
             for (int i = 0; i < MyGlobals.orderDetails.Count; i++)
             {
-                try
+                if (MyGlobals.orderDetails[i].Quantity > 0)
                 {
-                    drOrderDetails = dsBookShop.Tables["CustOrderDetails"].NewRow();
+                    try
+                    {
+                        drOrderDetails = dsBookShop.Tables["CustOrderDetails"].NewRow();
 
-                    drOrderDetails["ISBN"] = MyGlobals.orderDetails[i].ISBN;
-                    drOrderDetails["CustOrderNo"] = custOrderNo;
-                    drOrderDetails["Quantity"] = MyGlobals.orderDetails[i].Quantity;
+                        drOrderDetails["ISBN"] = MyGlobals.orderDetails[i].ISBN;
+                        drOrderDetails["CustOrderNo"] = custOrderNo;
+                        drOrderDetails["Quantity"] = MyGlobals.orderDetails[i].Quantity;
 
-                    dsBookShop.Tables["CustOrderDetails"].Rows.Add(drOrderDetails);
-                    daOrderDetails.Update(dsBookShop, "CustOrderDetails");
+                        dsBookShop.Tables["CustOrderDetails"].Rows.Add(drOrderDetails);
+                        daOrderDetails.Update(dsBookShop, "CustOrderDetails");
 
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
+                        MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
-                    MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
-                }
+
             }
             for (int i = 0; i < MyGlobals.orderDetails.Count; i++)
             {
@@ -234,29 +260,25 @@ namespace BookShop2
 
                     if (i == MyGlobals.orderDetails.Count - 1)
 
-                        MessageBox.Show("New Order Added", "Order");
+                        MessageBox.Show("New Order Added for: \n" + MyGlobals.customer.Forename + " " + MyGlobals.customer.Surname, "Order No: " + custOrderNo);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("" + ex.TargetSite + "" + ex.Message, "Error!",
                     MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
                 }
-
-                MyGlobals.justOrdered[0] = MyGlobals.customer.IdNo;  //Save order details to load on receipts page
-                MyGlobals.justOrdered[1] = custOrderNo;
-                MyGlobals.orderDetails.Clear();
-                MyGlobals.customer = null;
-                MyGlobals.cart = 0;
-                frmMain.instance.lblCartQuant.Text = MyGlobals.cart.ToString();
-                MyGlobals.frmRefunds = true;
-                Close();
-
             }
+            MyGlobals.orderDetails.Clear();
+            MyGlobals.customer = null;
+            MyGlobals.cart = 0;
+            frmMain.instance.lblCartQuant.Text = MyGlobals.cart.ToString();
+            MyGlobals.frmCustomer = true;
+            Close();
         }
 
         private void getNumber(int noRows)      //
         {
-            drOrder = dsBookShop.Tables["CustOrder"].Rows[noRows - 1];     // dr - datarow
+            drOrder = dsBookShop.Tables["CustOrder"].Rows[noRows - 1];     
             custOrderNo = (int.Parse(drOrder["CustOrderNo"].ToString()) + 1);
         }
     }
