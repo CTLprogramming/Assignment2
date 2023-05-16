@@ -120,7 +120,7 @@ namespace BookShop2
                 label1.Text = MyGlobals.orderDetails[i].Price.ToString();
 
                 combo.Items.Clear();
-                for (int j = 0; j < MyGlobals.orderDetails[i].Stock; j++)
+                for (int j = 0; j < MyGlobals.orderDetails[i].Stock+1; j++)
                 {
                     combo.Items.Add(j);
                     if (j == 9) break;
